@@ -27,7 +27,7 @@
       display: flex;
       flex-direction: column;
       /* ❗ 추가: 화면 밖으로 나가는 가로 요소 숨김 */
-      overflow-x: hidden; 
+      overflow-x: clip;
     }
 
     /* --- 레이아웃 --- */
@@ -37,7 +37,7 @@
       display: flex;
       flex-direction: column;
       /* ❗ 추가: 이중 방어 */
-      overflow-x: hidden; 
+      overflow-x: clip;
     }
 
     /* --- 헤더 --- */
@@ -49,13 +49,15 @@
     }
 
     .header-logo {
-      height: 200px; /* 기존 높이 유지 */
+      height: 200px;
+      /* 기존 높이 유지 */
       width: auto;
-      
+
       /* ❗ 추가: 핸드폰 화면보다 이미지가 커지면 화면 크기에 맞춤 */
-      max-width: 100%; 
-      object-fit: contain; /* ❗ 추가: 줄어들 때 찌그러지지 않게 보호 */
-      
+      max-width: 100%;
+      object-fit: contain;
+      /* ❗ 추가: 줄어들 때 찌그러지지 않게 보호 */
+
       margin: -70px 0;
       cursor: pointer;
       transition: 0.3s;
@@ -75,7 +77,7 @@
       border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
     }
 
     .tab-btn {
@@ -115,8 +117,15 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h2 {
@@ -187,9 +196,25 @@
       border-color: var(--main-black);
     }
 
-    .feature-icon { font-size: 1.8rem; margin-bottom: 10px; }
-    .feature-title { font-weight: 800; font-size: 1.05rem; color: var(--main-black); margin-bottom: 8px; letter-spacing: -0.3px; }
-    .feature-desc { font-size: 0.9rem; color: #666; line-height: 1.5; margin: 0; }
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--main-black);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .feature-desc {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
 
     .highlight-box {
       background: var(--main-black);
@@ -201,8 +226,19 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .highlight-quote { font-size: 1.25rem; font-weight: 800; margin: 0 0 10px 0; word-break: keep-all; line-height: 1.4; }
-    .highlight-sub { font-size: 0.9rem; color: #ccc; margin: 0 0 20px 0; }
+    .highlight-quote {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin: 0 0 10px 0;
+      word-break: keep-all;
+      line-height: 1.4;
+    }
+
+    .highlight-sub {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin: 0 0 20px 0;
+    }
 
     .insta-link {
       display: inline-flex;
@@ -218,10 +254,14 @@
       transition: 0.2s;
     }
 
-    .insta-link:hover { transform: scale(1.05); }
+    .insta-link:hover {
+      transform: scale(1.05);
+    }
 
     @media (max-width: 500px) {
-      .feature-grid { grid-template-columns: 1fr; }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* --- [탭2] 운영진 소개 --- */
@@ -259,9 +299,23 @@
       display: block;
     }
 
-    .staff-info { flex: 1; min-width: 0; }
-    .staff-info h4 { margin: 0 0 5px 0; font-size: 1.2rem; color: #111; }
-    .staff-info p { margin: 0; font-size: 0.9rem; color: #777; font-weight: 500; }
+    .staff-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .staff-info h4 {
+      margin: 0 0 5px 0;
+      font-size: 1.2rem;
+      color: #111;
+    }
+
+    .staff-info p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #777;
+      font-weight: 500;
+    }
 
     /* --- 🌟 모달 (짤림 방지 완벽 세팅) --- */
     .modal {
@@ -275,7 +329,8 @@
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 20px; /* 화면 테두리 보호 */
+      padding: 20px;
+      /* 화면 테두리 보호 */
     }
 
     .modal-content {
@@ -285,12 +340,13 @@
       border-radius: 20px;
       position: relative;
       animation: modalUp 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-      
+
       /* ❗ 핵심: 모달이 화면 높이의 80%를 넘지 않도록 제한 */
-      max-height: 80vh; 
+      max-height: 80vh;
       display: flex;
       flex-direction: column;
-      overflow: hidden; /* 모서리 둥근 부분 밖으로 콘텐츠가 삐져나가지 않게 함 */
+      overflow: hidden;
+      /* 모서리 둥근 부분 밖으로 콘텐츠가 삐져나가지 않게 함 */
     }
 
     /* JavaScript가 주입하는 데이터 래퍼 */
@@ -298,7 +354,8 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      overflow: hidden; /* 헤더 고정, 바디 스크롤을 위한 필수 설정 */
+      overflow: hidden;
+      /* 헤더 고정, 바디 스크롤을 위한 필수 설정 */
     }
 
     .close-modal {
@@ -313,14 +370,15 @@
     }
 
     /* 모달 헤더 (고정 영역) */
-    .modal-header { 
-      text-align: center; 
-      padding: 30px 20px 15px 20px; 
-      flex-shrink: 0; /* 내용이 많아져도 헤더는 찌그러지지 않게 방어 */
-      border-bottom: 1px solid #f0f0f0; 
+    .modal-header {
+      text-align: center;
+      padding: 30px 20px 15px 20px;
+      flex-shrink: 0;
+      /* 내용이 많아져도 헤더는 찌그러지지 않게 방어 */
+      border-bottom: 1px solid #f0f0f0;
       background: #fff;
     }
-    
+
     .modal-header img {
       width: 100px !important;
       height: 100px !important;
@@ -334,18 +392,38 @@
     /* 🌟 모달 본문 (스크롤 영역) */
     .modal-body {
       padding: 20px 30px 30px 30px;
-      overflow-y: auto; /* ❗ 내용이 길어지면 여기에만 스크롤이 생김 */
-      flex: 1; /* ❗ 남은 공간을 모두 차지하도록 늘려줌 */
+      overflow-y: auto;
+      /* ❗ 내용이 길어지면 여기에만 스크롤이 생김 */
+      flex: 1;
+      /* ❗ 남은 공간을 모두 차지하도록 늘려줌 */
     }
-    
-    /* 스크롤바 디자인 */
-    .modal-body::-webkit-scrollbar { width: 6px; }
-    .modal-body::-webkit-scrollbar-track { background: transparent; }
-    .modal-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
 
-    .modal-body h4 { margin: 0 0 15px 0; font-size: 1.1rem; border-bottom: 2px solid #f5f5f5; padding-bottom: 8px; flex-shrink: 0;}
-    
-    .career-group { margin-bottom: 15px; }
+    /* 스크롤바 디자인 */
+    .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    .modal-body h4 {
+      margin: 0 0 15px 0;
+      font-size: 1.1rem;
+      border-bottom: 2px solid #f5f5f5;
+      padding-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .career-group {
+      margin-bottom: 15px;
+    }
+
     .career-category {
       display: inline-block;
       font-weight: 800;
@@ -364,22 +442,54 @@
       line-height: 1.6;
       margin: 0;
     }
-    .modal-body ul li { margin-bottom: 4px; }
+
+    .modal-body ul li {
+      margin-bottom: 4px;
+    }
 
     /* --- [탭3] Q&A --- */
     .btn-sns {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 16px; border-radius: 12px; text-decoration: none; font-weight: 700; color: #fff; margin-bottom: 12px; font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      font-size: 1rem;
     }
-    .kakao { background: #fee500; color: #3c1e1e; }
-    .insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
 
-    footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; color: #aaa; background: #fafafa; }
+    .kakao {
+      background: #fee500;
+      color: #3c1e1e;
+    }
+
+    .insta {
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.85rem;
+      color: #aaa;
+      background: #fafafa;
+    }
 
     /* 반응형: PC */
     @media (min-width: 650px) {
-      .staff-container { grid-template-columns: repeat(3, 1fr); }
-      .staff-card { flex-direction: column; text-align: center; padding: 30px 20px; }
+      .staff-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .staff-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+      }
     }
   </style>
 </head>
@@ -471,7 +581,8 @@
       <div id="qa" class="tab-content">
         <h2>자주 묻는 질문</h2>
         <div class="section-box">
-          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을 진행합니다.</p>
+          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을
+            진행합니다.</p>
           <p><strong>Q. 활동비는 얼마인가요?</strong><br />A. 연습실 대관료 및 공연 제작비를 위해 매월 소정의 단비가 책정됩니다.</p>
         </div>
 
@@ -600,7 +711,7 @@
 
     function openModal(id) {
       const data = staffData[id];
-      
+
       const careerHtml = data.career.map(group => `
         <div class="career-group">
           <div class="career-category">[${group.category}]</div>
