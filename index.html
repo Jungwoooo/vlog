@@ -1,557 +1,627 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>극단 VLog</title>
-    <style>
-      /* --- 기초 설정 --- */
-      :root {
-        --main-black: #111111;
-        --gray-bg: #f5f5f5;
-        --border-color: #e0e0e0;
-      }
-      * {
-        box-sizing: border-box;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      }
-      body {
-        margin: 0;
-        background: #ffffff;
-        color: #333333;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
 
-      /* --- 레이아웃 --- */
-      .app-container {
-        width: 100%;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>극단 VLog</title>
+  <style>
+    /* --- 기초 설정 --- */
+    :root {
+      --main-black: #111111;
+      --gray-bg: #f5f5f5;
+      --border-color: #e0e0e0;
+    }
 
-      /* --- 헤더 --- */
-      header {
-        background: var(--gray-bg);
-        padding: 25px 20px;
-        text-align: center;
-        border-bottom: 2px solid var(--border-color);
-      }
-      .header-logo {
-        height: 200px;
-        width: auto;
-        margin: -70px 0;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-      header p {
-        margin: 10px 0 0;
-        color: #666;
-        font-size: 0.95rem;
-        font-weight: 500;
-      }
+    * {
+      box-sizing: border-box;
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
 
-      /* --- 탭 메뉴 (상단 고정) --- */
-      .tabs {
-        display: flex;
-        background: #ffffff;
-        border-bottom: 1px solid var(--border-color);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-      .tab-btn {
-        flex: 1;
-        padding: 18px 5px;
-        text-align: center;
-        cursor: pointer;
-        background: none;
-        border: none;
-        color: #888;
-        font-weight: 700;
-        font-size: 1rem;
-      }
-      .tab-btn.active {
-        color: var(--main-black);
-        border-bottom: 4px solid var(--main-black);
-        background: #fafafa;
-      }
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: #333333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-      /* --- 콘텐츠 공통 --- */
-      .content-area {
-        padding: 30px 20px;
-        max-width: 800px;
-        margin: 0 auto;
-        width: 100%;
-        flex-grow: 1;
-      }
-      .tab-content {
-        display: none;
-        animation: fadeIn 0.4s ease-out;
-      }
-      .tab-content.active {
-        display: block;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    /* --- 레이아웃 --- */
+    .app-container {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-      h2 {
-        font-size: 1.5rem;
-        border-left: 5px solid var(--main-black);
-        padding-left: 15px;
-        margin: 0 0 25px 0;
-        letter-spacing: -0.5px;
-      }
-      .section-box {
-        background: #f9fafb;
-        padding: 20px;
-        border-radius: 12px;
-        margin-bottom: 30px;
-        border: 1px solid #eee;
-        line-height: 1.7;
-      }
+    /* --- 헤더 --- */
+    header {
+      background: var(--gray-bg);
+      padding: 25px 20px;
+      text-align: center;
+      border-bottom: 2px solid var(--border-color);
+    }
 
-      /* --- [탭1] 배우 신청 --- */
-      .btn-apply {
-        display: block;
-        width: 100%;
-        padding: 20px;
-        background: var(--main-black);
-        color: #fff;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 12px;
-        font-weight: 800;
-        font-size: 1.1rem;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: 0.2s;
-      }
-      .btn-apply:hover {
-        transform: translateY(-2px);
-        background: #333;
-      }
-      .poster-img {
-        width: 100%;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      }
+    .header-logo {
+      height: 300px;
+      width: auto;
+      margin: -80px 0 -100px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-      /* --- [탭2] 운영진 소개 (이미지 깨짐 방지 핵심) --- */
-      .staff-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
+    header p {
+      margin: 10px 0 0;
+      color: #666;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
 
-      .staff-card {
-        display: flex;
-        align-items: center; /* 세로 방향 자식들을 중앙 정렬 (늘어나지 않게 함) */
-        gap: 20px;
-        background: #fff;
-        border: 1px solid #eee;
-        padding: 20px;
-        border-radius: 15px;
-        cursor: pointer;
-        transition: 0.2s ease-in-out;
-      }
-      .staff-card:hover {
-        border-color: var(--main-black);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-      }
+    /* --- 탭 메뉴 (상단 고정) --- */
+    .tabs {
+      display: flex;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-      /* 이미지 깨짐 해결 핵심 클래스 */
-      .staff-thumb {
-        width: 85px !important;
-        height: 85px !important;
-        border-radius: 50% !important;
+    .tab-btn {
+      flex: 1;
+      padding: 18px 5px;
+      text-align: center;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #888;
+      font-weight: 700;
+      font-size: 1rem;
+    }
 
-        /* 얼굴이 중앙에 오도록 고정 */
-        object-position: center;
+    .tab-btn.active {
+      color: var(--main-black);
+      border-bottom: 4px solid var(--main-black);
+      background: #fafafa;
+    }
 
-        /* 부모 요소(Flex)가 이미지를 압축하거나 늘리는 것을 절대 방어 */
-        flex-shrink: 0 !important;
-        display: block;
-      }
+    /* --- 콘텐츠 공통 --- */
+    .content-area {
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+      flex-grow: 1;
+    }
 
-      .staff-info {
-        flex: 1;
-        min-width: 0;
-      }
-      .staff-info h4 {
-        margin: 0 0 5px 0;
-        font-size: 1.2rem;
-        color: #111;
-      }
-      .staff-info p {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #777;
-        font-weight: 500;
-      }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
 
-      /* --- 모달 --- */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 100;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-      .modal-content {
-        background: #fff;
-        width: 100%;
-        max-width: 450px;
-        border-radius: 25px;
-        padding: 35px;
-        position: relative;
-        animation: modalUp 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-      }
-      @keyframes modalUp {
-        from {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .close-modal {
-        position: absolute;
-        top: 20px;
-        right: 25px;
-        font-size: 1.8rem;
-        cursor: pointer;
-        color: #bbb;
-      }
-      .modal-header {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      .modal-header img {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        margin-bottom: 10px;
-      }
-      .modal-body h4 {
-        margin: 0 0 12px 0;
-        font-size: 1.1rem;
-        border-bottom: 2px solid #f5f5f5;
-        padding-bottom: 8px;
-      }
-      .modal-body ul {
-        padding-left: 18px;
-        font-size: 0.95rem;
-        color: #555;
-        line-height: 1.8;
-        margin: 0;
-      }
+    .tab-content.active {
+      display: block;
+    }
 
-      /* --- [탭3] Q&A --- */
-      .btn-sns {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 16px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 700;
-        color: #fff;
-        margin-bottom: 12px;
-        font-size: 1rem;
-      }
-      .kakao {
-        background: #fee500;
-        color: #3c1e1e;
-      }
-      .insta {
-        background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-      footer {
-        text-align: center;
-        padding: 40px 20px;
-        font-size: 0.85rem;
-        color: #aaa;
-        background: #fafafa;
-      }
+    h2 {
+      font-size: 1.5rem;
+      border-left: 5px solid var(--main-black);
+      padding-left: 15px;
+      margin: 0 0 25px 0;
+      letter-spacing: -0.5px;
+    }
 
-      /* 반응형: PC */
-      @media (min-width: 650px) {
-        .staff-container {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        .staff-card {
-          flex-direction: column;
-          text-align: center;
-          padding: 30px 20px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="app-container">
-      <header>
-        <img
-          src="img_vlog_icon.png"
-          alt="vlog 아이콘"
-          class="header-logo"
-          onclick="location.reload()"
-        />
-        <p>당신의 가장 빛나는 순간을, VLog가 기록합니다.</p>
-      </header>
+    .section-box {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      border: 1px solid #eee;
+      line-height: 1.7;
+    }
 
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('apply')">
-          배우 신청
-        </button>
-        <button class="tab-btn" onclick="switchTab('staff')">
-          운영진 소개
-        </button>
-        <button class="tab-btn" onclick="switchTab('qa')">Q&A</button>
-      </div>
+    /* --- [탭1] 배우 신청 --- */
+    .btn-apply {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      background: var(--main-black);
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: 0.2s;
+    }
 
-      <div class="content-area">
-        <div id="apply" class="tab-content active">
-          <a
-            href="https://form.naver.com/..."
-            target="_blank"
-            class="btn-apply"
-          >
-            2026 신입단원 가입 신청하기
-          </a>
+    .btn-apply:hover {
+      transform: translateY(-2px);
+      background: #333;
+    }
 
-          <h2>극단 소개</h2>
-          <div class="section-box">
-            <p>
-              <strong>"우리의 무대는 당신의 일상입니다."</strong
-              ><br /><br />VLog는 평범한 이들의 삶 속에 숨겨진 드라마를 발견하고
-              기록합니다. 전문 배우부터 처음 시작하는 열정가까지, 무대를 향한
-              진심 하나로 뭉친 사람들이 모여 있습니다.
-            </p>
-          </div>
+    .poster-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
 
-          <img
-            src="img_wicked.png"
-            alt="모집 포스터"
-            class="poster-img"
-          />
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
 
-          <h3>연습실 안내</h3>
-          <p style="font-size: 1rem; color: #666">
-            📍 서울특별시 OOO구 OOO로 123 (VLog 연습실)
-          </p>
-        </div>
+    .feature-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
 
-        <div id="staff" class="tab-content">
-          <h2>운영진 소개</h2>
-          <p style="color: #888; margin-bottom: 25px; font-size: 0.9rem">
-            이미지를 클릭하면 상세 경력을 볼 수 있습니다.
-          </p>
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-color: var(--main-black);
+    }
 
-          <div class="staff-container">
-            <div class="staff-card" onclick="openModal('staff1')">
-              <img
-                src="https://picsum.photos/300/300?random=2"
-                alt="신가연"
-                class="staff-thumb"
-              />
-              <div class="staff-info">
-                <h4>신가연</h4>
-                <p>총괄 연출 / 대표</p>
-              </div>
-            </div>
-            <div class="staff-card" onclick="openModal('staff2')">
-              <img src="img_teacher_chu.jpg" alt="추소연" class="staff-thumb" />
-              <div class="staff-info">
-                <h4>추소연</h4>
-                <p>음악 & 연기 코치</p>
-              </div>
-            </div>
-            <div class="staff-card" onclick="openModal('staff3')">
-              <img
-                src="https://picsum.photos/300/300?random=4"
-                alt="안무 코치"
-                class="staff-thumb"
-              />
-              <div class="staff-info">
-                <h4>안무 코치</h4>
-                <p>무대 움직임 디렉터</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    .feature-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .feature-title { font-weight: 800; font-size: 1.05rem; color: var(--main-black); margin-bottom: 8px; letter-spacing: -0.3px; }
+    .feature-desc { font-size: 0.9rem; color: #666; line-height: 1.5; margin: 0; }
 
-        <div id="qa" class="tab-content">
-          <h2>자주 묻는 질문</h2>
-          <div class="section-box">
-            <p style="margin-bottom: 15px">
-              <strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서
-              검토 후 개별 연락을 드리며, 가벼운 미팅을 진행합니다.
-            </p>
-            <p>
-              <strong>Q. 활동비는 얼마인가요?</strong><br />A. 연습실 대관료 및
-              공연 제작비를 위해 매월 소정의 단비가 책정됩니다.
-            </p>
-          </div>
+    .highlight-box {
+      background: var(--main-black);
+      color: #fff;
+      padding: 30px 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-          <h3>문의 채널</h3>
-          <div class="sns-links">
-            <a
-              href="https://open.kakao.com"
-              target="_blank"
-              class="btn-sns kakao"
-              >💬 카카오톡 오픈채팅 문의</a
-            >
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              class="btn-sns insta"
-              >📸 공식 인스타그램</a
-            >
-          </div>
-        </div>
-      </div>
+    .highlight-quote { font-size: 1.25rem; font-weight: 800; margin: 0 0 10px 0; word-break: keep-all; line-height: 1.4; }
+    .highlight-sub { font-size: 0.9rem; color: #ccc; margin: 0 0 20px 0; }
 
-      <footer>&copy; 2026 THEATER TROUPE VLog. All rights reserved.</footer>
+    .insta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--main-black);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .insta-link:hover { transform: scale(1.05); }
+
+    @media (max-width: 500px) {
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+
+    /* --- [탭2] 운영진 소개 --- */
+    .staff-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .staff-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 20px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    .staff-card:hover {
+      border-color: var(--main-black);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .staff-thumb {
+      width: 85px !important;
+      height: 85px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center;
+      flex-shrink: 0 !important;
+      display: block;
+    }
+
+    .staff-info { flex: 1; min-width: 0; }
+    .staff-info h4 { margin: 0 0 5px 0; font-size: 1.2rem; color: #111; }
+    .staff-info p { margin: 0; font-size: 0.9rem; color: #777; font-weight: 500; }
+
+    /* --- 🌟 모달 (짤림 방지 완벽 세팅) --- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px; /* 화면 테두리 보호 */
+    }
+
+    .modal-content {
+      background: #fff;
+      width: 100%;
+      max-width: 450px;
+      border-radius: 20px;
+      position: relative;
+      animation: modalUp 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+      
+      /* ❗ 핵심: 모달이 화면 높이의 80%를 넘지 않도록 제한 */
+      max-height: 80vh; 
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* 모서리 둥근 부분 밖으로 콘텐츠가 삐져나가지 않게 함 */
+    }
+
+    /* JavaScript가 주입하는 데이터 래퍼 */
+    #modalData {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden; /* 헤더 고정, 바디 스크롤을 위한 필수 설정 */
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #999;
+      z-index: 10;
+      line-height: 1;
+    }
+
+    /* 모달 헤더 (고정 영역) */
+    .modal-header { 
+      text-align: center; 
+      padding: 30px 20px 15px 20px; 
+      flex-shrink: 0; /* 내용이 많아져도 헤더는 찌그러지지 않게 방어 */
+      border-bottom: 1px solid #f0f0f0; 
+      background: #fff;
+    }
+    
+    .modal-header img {
+      width: 100px !important;
+      height: 100px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      object-position: center;
+      margin-bottom: 10px;
+      border: 3px solid #f9f9f9;
+    }
+
+    /* 🌟 모달 본문 (스크롤 영역) */
+    .modal-body {
+      padding: 20px 30px 30px 30px;
+      overflow-y: auto; /* ❗ 내용이 길어지면 여기에만 스크롤이 생김 */
+      flex: 1; /* ❗ 남은 공간을 모두 차지하도록 늘려줌 */
+    }
+    
+    /* 스크롤바 디자인 */
+    .modal-body::-webkit-scrollbar { width: 6px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    .modal-body h4 { margin: 0 0 15px 0; font-size: 1.1rem; border-bottom: 2px solid #f5f5f5; padding-bottom: 8px; flex-shrink: 0;}
+    
+    .career-group { margin-bottom: 15px; }
+    .career-category {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--main-black);
+      background: #f0f0f0;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .modal-body ul {
+      padding-left: 20px;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .modal-body ul li { margin-bottom: 4px; }
+
+    /* --- [탭3] Q&A --- */
+    .btn-sns {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px; border-radius: 12px; text-decoration: none; font-weight: 700; color: #fff; margin-bottom: 12px; font-size: 1rem;
+    }
+    .kakao { background: #fee500; color: #3c1e1e; }
+    .insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+
+    footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; color: #aaa; background: #fafafa; }
+
+    /* 반응형: PC */
+    @media (min-width: 650px) {
+      .staff-container { grid-template-columns: repeat(3, 1fr); }
+      .staff-card { flex-direction: column; text-align: center; padding: 30px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <img src="img_vlog_icon.png" alt="vlog 아이콘" class="header-logo" onclick="location.reload()" />
+      <p>당신의 가장 빛나는 순간을, VLog가 기록합니다.</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('apply')">배우 신청</button>
+      <button class="tab-btn" onclick="switchTab('staff')">운영진 소개</button>
+      <button class="tab-btn" onclick="switchTab('qa')">Q&A</button>
     </div>
 
-    <div id="staffModal" class="modal" onclick="closeModal(event)">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <span
-          class="close-modal"
-          onclick="document.getElementById('staffModal').style.display = 'none'"
-          >&times;</span
-        >
-        <div id="modalData"></div>
+    <div class="content-area">
+      <div id="apply" class="tab-content active">
+        <a href="https://form.naver.com/..." target="_blank" class="btn-apply">2026 신입단원 가입 신청하기</a>
+
+        <h2>왜 VLog와 함께해야 할까요?</h2>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <div class="feature-title">퀄리티 있는 프로필과 무대</div>
+            <p class="feature-desc">인생에 남을 멋진 배역 프로필과 완성도 높은 무대를 함께 만들어갑니다.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎭</div>
+            <div class="feature-title">과정의 '재미' 보장</div>
+            <p class="feature-desc">결과도 중요하지만, 연습하는 매 순간이 즐겁고 행복한 과정을 약속합니다.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <div class="feature-title">책임 있는 운영 (보강제도)</div>
+            <p class="feature-desc">피치 못할 결석에도 안심하세요. 철저한 보강 제도로 끝까지 책임집니다.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📸</div>
+            <div class="feature-title">'기록'에 진심인 극단</div>
+            <p class="feature-desc">땀 흘리는 연습부터 무대 위 모습까지, 소중한 순간들을 빠짐없이 기록합니다.</p>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <p class="highlight-quote">"당신의 가장 빛나는 순간을 VLog가 기록합니다."</p>
+          <p class="highlight-sub">더 궁금한 점이 있다면 언제든 편하게 DM으로 문의해 주세요 :)</p>
+          <a href="https://instagram.com/vlog_musical" target="_blank" class="insta-link">📸 @vlog_musical</a>
+        </div>
+
+        <h2>공연 포스터</h2>
+        <img src="img_wicked.png" alt="모집 포스터" class="poster-img" />
+
+        <h3>연습실 안내</h3>
+        <p style="font-size: 1rem; color: #666">📍 서울 성북구 동선동1가 85-101 (VLog 성신여대입구역 연습실)</p>
+      </div>
+
+      <div id="staff" class="tab-content">
+        <h2>운영진 소개</h2>
+        <p style="color: #888; margin-bottom: 25px; font-size: 0.9rem">이미지를 클릭하면 상세 경력을 볼 수 있습니다.</p>
+
+        <div class="staff-container">
+          <div class="staff-card" onclick="openModal('staff1')">
+            <img src="https://picsum.photos/300/300?random=2" alt="신가연" class="staff-thumb" />
+            <div class="staff-info">
+              <h4>신가연</h4>
+              <p>총괄 연출</p>
+            </div>
+          </div>
+          <div class="staff-card" onclick="openModal('staff2')">
+            <img src="img_teacher_chu.jpg" alt="추소연" class="staff-thumb" />
+            <div class="staff-info">
+              <h4>추소연</h4>
+              <p>음악 & 연기 코치</p>
+            </div>
+          </div>
+          <div class="staff-card" onclick="openModal('staff3')">
+            <img src="https://picsum.photos/300/300?random=4" alt="안무 코치" class="staff-thumb" />
+            <div class="staff-info">
+              <h4>안무 코치</h4>
+              <p>안무 코치</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="qa" class="tab-content">
+        <h2>자주 묻는 질문</h2>
+        <div class="section-box">
+          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을 진행합니다.</p>
+          <p><strong>Q. 활동비는 얼마인가요?</strong><br />A. 연습실 대관료 및 공연 제작비를 위해 매월 소정의 단비가 책정됩니다.</p>
+        </div>
+
+        <h3>문의 채널</h3>
+        <div class="sns-links">
+          <a href="https://open.kakao.com" target="_blank" class="btn-sns kakao">💬 카카오톡 오픈채팅 문의</a>
+          <a href="https://instagram.com" target="_blank" class="btn-sns insta">📸 @vlog_musical</a>
+        </div>
       </div>
     </div>
 
-    <script>
-      function switchTab(tabId) {
-        document
-          .querySelectorAll(".tab-btn")
-          .forEach((btn) => btn.classList.remove("active"));
-        document
-          .querySelectorAll(".tab-content")
-          .forEach((content) => content.classList.remove("active"));
-        document.getElementById(tabId).classList.add("active");
-        const targetBtn = Array.from(
-          document.querySelectorAll(".tab-btn"),
-        ).find((btn) => btn.getAttribute("onclick").includes(tabId));
-        if (targetBtn) targetBtn.classList.add("active");
-        window.scrollTo(0, 0);
+    <footer>&copy; 2026 THEATER TROUPE VLog. All rights reserved.</footer>
+  </div>
+
+  <div id="staffModal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-modal" onclick="document.getElementById('staffModal').style.display = 'none'">&times;</span>
+      <div id="modalData"></div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      const targetBtn = Array.from(document.querySelectorAll(".tab-btn")).find((btn) => btn.getAttribute("onclick").includes(tabId));
+      if (targetBtn) targetBtn.classList.add("active");
+      window.scrollTo(0, 0);
+    }
+
+    const staffData = {
+      staff1: {
+        name: "신가연",
+        role: "총괄 연출",
+        img: "https://picsum.photos/300/300?random=2",
+        career: [
+          {
+            category: "학력",
+            items: [
+              "중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업"
+            ]
+          },
+          {
+            category: "단편 <겨울은 겨울> (2017) 감독",
+            items: [
+              "영진위 제작지원작",
+              "인디스토리 배급",
+              "22회 부천국제판타스틱 영화제 상영",
+              "대학영화제 대상 수상"
+            ]
+          },
+          {
+            category: "단편 <일렁일렁> (2020) 감독",
+            items: [
+              "영진위 뉴미디어 영상콘텐츠 제작지원작",
+              "인디스토리 배급"
+            ]
+          },
+          {
+            category: "단편 <CONTACT> (2022) 감독",
+            items: [
+              "한국문화예술진흥위원회 / 안은미 컴퍼니 제작지원작",
+            ]
+          }
+        ]
+      },
+      staff2: {
+        name: "추소연",
+        role: "음악 & 연기 코치",
+        img: "img_teacher_chu.jpg",
+        career: [
+          {
+            category: "방송",
+            items: [
+              "2017 웹드라마 <굿모닝 이층버스> 학생 단역",
+              "2026 단편영화 <이벤트> 지수 역"
+            ]
+          },
+          {
+            category: "연극",
+            items: [
+              "2021~2022 <한 여름밤의 꿈> 요정 역 | 이효숙 연출",
+              "2023 <살고싶어 죽겠어요> 의사, 기자 역 | 장윤호 연출",
+              "2023 <굿닥터> 아내, 치과조수, 여자, 직원 역 | 박수철 연출",
+              "2023 김제시 <콩쥐팥쥐> 팥쥐 역 | 고혜미 연출",
+              "2024 <DIE> 줄리엣 역 | 장윤호 연출",
+              "2024 <머더> 강예은 역 | 김윤재 연출",
+              "2025 <영겁의 방> 시은빈 역 | 이민수 연출",
+              "2025 <더 투나잇 쇼> 기자 역 | 이민수 연출",
+            ]
+          },
+          {
+            category: "뮤지컬",
+            items: [
+              "2024 <나도, 밤나무> 사깨비 역 | 박현철 연출",
+              "2024~2025 <너와 나 이곳에 우리> 세아 역 (주연) | 김윤재 연출",
+              "2025 <지구용사 푸름이> 푸름이 역 (주연) | 김지선 연출",
+              "2025 <나도, 밤나무> 현룡 역 (주연) | 박현철 연출"
+            ]
+          }
+        ]
+      },
+      staff3: {
+        name: "안무 코치",
+        role: "안무 코치",
+        img: "https://picsum.photos/300/300?random=4",
+        career: [
+          {
+            category: "학력 및 이력",
+            items: [
+              "한예종 현대무용 전공",
+              "국립현대무용단 프로젝트 단원"
+            ]
+          },
+          {
+            category: "안무 및 교육",
+            items: [
+              "연극 '움직이는 밤' 안무 총괄",
+              "신체 표현 워크숍 전문 강사"
+            ]
+          }
+        ]
       }
+    };
 
-      const staffData = {
-        staff1: {
-          name: "신가연",
-          role: "총괄 연출",
-          img: "https://picsum.photos/300/300?random=2",
-          career: [
-            //             -중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업
+    function openModal(id) {
+      const data = staffData[id];
+      
+      const careerHtml = data.career.map(group => `
+        <div class="career-group">
+          <div class="career-category">[${group.category}]</div>
+          <ul>
+            ${group.items.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>
+      `).join("");
 
-            // 단편 <겨울은 겨울> (2017) 감독
-            // -영진위 제작지원작
-            // -인디스토리 배급
-            // -22회 부천국제판타스틱 영화제 상영
-            // -대학영화제 대상 수상
+      const html = `
+        <div class="modal-header">
+          <img src="${data.img}" alt="${data.name}">
+          <h3>${data.name}</h3>
+          <p style="color:#777; font-weight:500; margin:0;">${data.role}</p>
+        </div>
+        <div class="modal-body">
+          <h4>주요 경력</h4>
+          ${careerHtml}
+        </div>
+      `;
+      document.getElementById("modalData").innerHTML = html;
+      document.getElementById("staffModal").style.display = "flex";
+    }
 
-            // 단편 <일렁일렁> (2020) 감독
-            // -영진위 뉴미디어 영상콘텐츠 제작지원작
-            // -인디스토리 배급
-
-            // 단편 <CONTACT> (2022) 감독
-            // -한국문화예술진흥위원회 / 안은미 컴퍼니 제작지원작
-            "중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업",
-            "단편 <겨울은 겨울> (2017) 감독",
-            "단편 <일렁일렁> (2020) 감독",
-            "단편 <CONTACT> (2022) 감독",
-          ],
-        },
-        staff2: {
-          name: "추소연",
-          role: "음악 & 연기 코치",
-          img: "img_teacher_chu.jpg",
-          career: [
-            "2017 웹드라마 <굿모닝 이층버스> 학생 단역",
-            "2026 단편영화 <이벤트> 지수 역",
-            "2021~ 2022 초연, 재연 <한 여름밤의 꿈> 요정 역 | 이효숙 연출",
-            "2023<살고싶어 죽겠어요> 의사, 기자 역 | 장윤호 연출",
-            "2023 <굿닥터> 아내, 치과조수, 여자, 직원 역 | 박수철 연출",
-            "2023 김제시 <콩쥐팥쥐> 팥쥐 역 | 고혜미 연출",
-            "2024 <DIE> 줄리엣 역 | 장윤호 연출",
-            "2024 <머더> 강예은 역 | 김윤재 연출",
-            "2025 <영겁의 방> 시은빈 역 | 이민수 연출",
-            "2025 <더 투나잇 쇼> 기자 역 | 이민수 연출",
-            "2024 <나도, 밤나무> 사깨비 역| 박현철 연출",
-            "2024~2025 너와 나 이곳에 우리> 세아 역 (주연) | 김윤재 연출",
-            "2025 지구용사 푸름이> 푸름이 역 (주연) | 김지선 연출",
-            "2025 <나도, 밤나무> 현룡 역 (주연) | 박현철 연출",
-          ],
-        },
-        staff3: {
-          name: "안무 코치",
-          role: "안무 코치",
-          img: "https://picsum.photos/300/300?random=4",
-          career: [
-            "한예종 현대무용 전공",
-            "연극 '움직이는 밤' 안무 총괄",
-            "신체 표현 워크숍 전문 강사",
-            "국립현대무용단 프로젝트 단원",
-          ],
-        },
-      };
-
-      function openModal(id) {
-        const data = staffData[id];
-        const html = `
-          <div class="modal-header">
-            <img src="${data.img}" alt="${data.name}">
-            <h3>${data.name}</h3>
-            <p style="color:#777; font-weight:500;">${data.role}</p>
-          </div>
-          <div class="modal-body">
-            <h4>주요 경력</h4>
-            <ul>
-              ${data.career.map((item) => `<li>${item}</li>`).join("")}
-            </ul>
-          </div>
-        `;
-        document.getElementById("modalData").innerHTML = html;
-        document.getElementById("staffModal").style.display = "flex";
+    function closeModal(e) {
+      if (e.target.id === "staffModal") {
+        document.getElementById("staffModal").style.display = "none";
       }
+    }
+  </script>
+</body>
 
-      function closeModal(e) {
-        if (e.target.id === "staffModal") {
-          document.getElementById("staffModal").style.display = "none";
-        }
-      }
-    </script>
-  </body>
 </html>
