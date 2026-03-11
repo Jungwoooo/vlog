@@ -6,28 +6,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>극단 VLog</title>
   <style>
-    /* --- 기초 설정 --- */
+    /* --- 🌟 1. 테마 변수 설정 (라이트/다크) --- */
     :root {
-      --main-black: #111111;
-      --gray-bg: #f5f5f5;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5; /* 헤더, 푸터 등 */
+      --bg-tertiary: #f9fafb; /* 섹션 박스 등 */
+      --bg-card: #ffffff; /* 카드, 모달 배경 */
+      --bg-badge: #f0f0f0; /* 경력 뱃지 등 */
+
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --text-muted: #888888;
+      --text-heading: #111111;
+
       --border-color: #e0e0e0;
+      --border-light: #eeeeee;
+
+      --accent-color: #111111; /* 포인트 컬러 (기존 검정) */
+      --accent-text: #ffffff; /* 포인트 컬러 위 글자색 */
+
+      --shadow-color: rgba(0, 0, 0, 0.05);
+      --modal-overlay: rgba(0, 0, 0, 0.75);
     }
 
+    [data-theme="dark"] {
+      --bg-primary: #121212;
+      --bg-secondary: #1e1e1e;
+      --bg-tertiary: #252525;
+      --bg-card: #1a1a1a;
+      --bg-badge: #333333;
+
+      --text-primary: #e0e0e0;
+      --text-secondary: #aaaaaa;
+      --text-muted: #777777;
+      --text-heading: #ffffff;
+
+      --border-color: #333333;
+      --border-light: #2a2a2a;
+
+      --accent-color: #ffffff; /* 다크모드에선 포인트가 흰색으로 반전 */
+      --accent-text: #111111;
+
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --modal-overlay: rgba(0, 0, 0, 0.85);
+    }
+
+    /* --- 기초 설정 --- */
     * {
       box-sizing: border-box;
-      font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      /* 부드러운 테마 전환 효과 */
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     body {
       margin: 0;
-      background: #ffffff;
-      color: #333333;
+      background: var(--bg-primary);
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      /* ❗ 추가: 화면 밖으로 나가는 가로 요소 숨김 */
       overflow-x: clip;
+    }
+
+    /* --- 다크모드 토글 버튼 --- */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 8px var(--shadow-color);
+      z-index: 100;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
     }
 
     /* --- 레이아웃 --- */
@@ -36,13 +98,13 @@
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      /* ❗ 추가: 이중 방어 */
       overflow-x: clip;
+      position: relative; /* 토글 버튼 기준점 */
     }
 
     /* --- 헤더 --- */
     header {
-      background: var(--gray-bg);
+      background: var(--bg-secondary);
       padding: 25px 20px;
       text-align: center;
       border-bottom: 2px solid var(--border-color);
@@ -50,22 +112,21 @@
 
     .header-logo {
       height: 200px;
-      /* 기존 높이 유지 */
       width: auto;
-
-      /* ❗ 추가: 핸드폰 화면보다 이미지가 커지면 화면 크기에 맞춤 */
       max-width: 100%;
       object-fit: contain;
-      /* ❗ 추가: 줄어들 때 찌그러지지 않게 보호 */
-
       margin: -70px 0;
       cursor: pointer;
-      transition: 0.3s;
     }
+
+    /* 다크모드일 때 로고 이미지 반전 (필요시 사용, 로고가 검정색 글씨일 경우 유용) */
+    /* [data-theme="dark"] .header-logo {
+      filter: invert(1);
+    } */
 
     header p {
       margin: 10px 0 0;
-      color: #666;
+      color: var(--text-secondary);
       font-size: 0.95rem;
       font-weight: 500;
     }
@@ -73,7 +134,7 @@
     /* --- 탭 메뉴 (상단 고정) --- */
     .tabs {
       display: flex;
-      background: #ffffff;
+      background: var(--bg-primary);
       border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
@@ -87,15 +148,15 @@
       cursor: pointer;
       background: none;
       border: none;
-      color: #888;
+      color: var(--text-muted);
       font-weight: 700;
       font-size: 1rem;
     }
 
     .tab-btn.active {
-      color: var(--main-black);
-      border-bottom: 4px solid var(--main-black);
-      background: #fafafa;
+      color: var(--text-heading);
+      border-bottom: 4px solid var(--accent-color);
+      background: var(--bg-tertiary);
     }
 
     /* --- 콘텐츠 공통 --- */
@@ -117,32 +178,30 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    h2, h3 {
+      color: var(--text-heading);
     }
 
     h2 {
       font-size: 1.5rem;
-      border-left: 5px solid var(--main-black);
+      border-left: 5px solid var(--accent-color);
       padding-left: 15px;
       margin: 0 0 25px 0;
       letter-spacing: -0.5px;
     }
 
     .section-box {
-      background: #f9fafb;
+      background: var(--bg-tertiary);
       padding: 20px;
       border-radius: 12px;
       margin-bottom: 30px;
-      border: 1px solid #eee;
+      border: 1px solid var(--border-light);
       line-height: 1.7;
+      color: var(--text-primary);
     }
 
     /* --- [탭1] 배우 신청 --- */
@@ -150,28 +209,27 @@
       display: block;
       width: 100%;
       padding: 20px;
-      background: var(--main-black);
-      color: #fff;
+      background: var(--accent-color);
+      color: var(--accent-text);
       text-align: center;
       text-decoration: none;
       border-radius: 12px;
       font-weight: 800;
       font-size: 1.1rem;
       margin-bottom: 30px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: 0.2s;
+      box-shadow: 0 4px 12px var(--shadow-color);
     }
 
     .btn-apply:hover {
       transform: translateY(-2px);
-      background: #333;
+      opacity: 0.9;
     }
 
     .poster-img {
       width: 100%;
       border-radius: 12px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 10px var(--shadow-color);
     }
 
     .feature-grid {
@@ -182,18 +240,17 @@
     }
 
     .feature-card {
-      background: #fff;
-      border: 1px solid #eee;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px var(--shadow-color);
     }
 
     .feature-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      border-color: var(--main-black);
+      box-shadow: 0 5px 15px var(--shadow-color);
+      border-color: var(--accent-color);
     }
 
     .feature-icon {
@@ -204,26 +261,25 @@
     .feature-title {
       font-weight: 800;
       font-size: 1.05rem;
-      color: var(--main-black);
+      color: var(--text-heading);
       margin-bottom: 8px;
-      letter-spacing: -0.3px;
     }
 
     .feature-desc {
       font-size: 0.9rem;
-      color: #666;
+      color: var(--text-secondary);
       line-height: 1.5;
       margin: 0;
     }
 
     .highlight-box {
-      background: var(--main-black);
-      color: #fff;
+      background: var(--accent-color);
+      color: var(--accent-text);
       padding: 30px 20px;
       border-radius: 12px;
       text-align: center;
       margin-bottom: 30px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px var(--shadow-color);
     }
 
     .highlight-quote {
@@ -236,7 +292,7 @@
 
     .highlight-sub {
       font-size: 0.9rem;
-      color: #ccc;
+      opacity: 0.8;
       margin: 0 0 20px 0;
     }
 
@@ -244,14 +300,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: #fff;
-      color: var(--main-black);
+      background: var(--bg-primary);
+      color: var(--text-heading);
       padding: 12px 24px;
       border-radius: 8px;
       font-weight: 700;
       text-decoration: none;
       font-size: 0.95rem;
-      transition: 0.2s;
     }
 
     .insta-link:hover {
@@ -275,18 +330,17 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      background: #fff;
-      border: 1px solid #eee;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
       padding: 20px;
       border-radius: 15px;
       cursor: pointer;
-      transition: 0.2s ease-in-out;
     }
 
     .staff-card:hover {
-      border-color: var(--main-black);
+      border-color: var(--accent-color);
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 20px var(--shadow-color);
     }
 
     .staff-thumb {
@@ -307,17 +361,17 @@
     .staff-info h4 {
       margin: 0 0 5px 0;
       font-size: 1.2rem;
-      color: #111;
+      color: var(--text-heading);
     }
 
     .staff-info p {
       margin: 0;
       font-size: 0.9rem;
-      color: #777;
+      color: var(--text-secondary);
       font-weight: 500;
     }
 
-    /* --- 🌟 모달 (짤림 방지 완벽 세팅) --- */
+    /* --- 🌟 모달 --- */
     .modal {
       display: none;
       position: fixed;
@@ -325,37 +379,31 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.75);
+      background: var(--modal-overlay);
       z-index: 100;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      /* 화면 테두리 보호 */
     }
 
     .modal-content {
-      background: #fff;
+      background: var(--bg-card);
       width: 100%;
       max-width: 450px;
       border-radius: 20px;
       position: relative;
       animation: modalUp 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-
-      /* ❗ 핵심: 모달이 화면 높이의 80%를 넘지 않도록 제한 */
       max-height: 80vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      /* 모서리 둥근 부분 밖으로 콘텐츠가 삐져나가지 않게 함 */
     }
 
-    /* JavaScript가 주입하는 데이터 래퍼 */
     #modalData {
       display: flex;
       flex-direction: column;
       height: 100%;
       overflow: hidden;
-      /* 헤더 고정, 바디 스크롤을 위한 필수 설정 */
     }
 
     .close-modal {
@@ -364,19 +412,17 @@
       right: 20px;
       font-size: 2rem;
       cursor: pointer;
-      color: #999;
+      color: var(--text-muted);
       z-index: 10;
       line-height: 1;
     }
 
-    /* 모달 헤더 (고정 영역) */
     .modal-header {
       text-align: center;
       padding: 30px 20px 15px 20px;
       flex-shrink: 0;
-      /* 내용이 많아져도 헤더는 찌그러지지 않게 방어 */
-      border-bottom: 1px solid #f0f0f0;
-      background: #fff;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--bg-card);
     }
 
     .modal-header img {
@@ -386,38 +432,26 @@
       object-fit: cover !important;
       object-position: center;
       margin-bottom: 10px;
-      border: 3px solid #f9f9f9;
+      border: 3px solid var(--bg-tertiary);
     }
 
-    /* 🌟 모달 본문 (스크롤 영역) */
     .modal-body {
       padding: 20px 30px 30px 30px;
       overflow-y: auto;
-      /* ❗ 내용이 길어지면 여기에만 스크롤이 생김 */
       flex: 1;
-      /* ❗ 남은 공간을 모두 차지하도록 늘려줌 */
     }
 
-    /* 스크롤바 디자인 */
-    .modal-body::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .modal-body::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb {
-      background: #ccc;
-      border-radius: 3px;
-    }
+    .modal-body::-webkit-scrollbar { width: 6px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
 
     .modal-body h4 {
       margin: 0 0 15px 0;
       font-size: 1.1rem;
-      border-bottom: 2px solid #f5f5f5;
+      border-bottom: 2px solid var(--border-light);
       padding-bottom: 8px;
       flex-shrink: 0;
+      color: var(--text-heading);
     }
 
     .career-group {
@@ -428,8 +462,8 @@
       display: inline-block;
       font-weight: 800;
       font-size: 0.9rem;
-      color: var(--main-black);
-      background: #f0f0f0;
+      color: var(--text-heading);
+      background: var(--bg-badge);
       padding: 4px 10px;
       border-radius: 6px;
       margin-bottom: 8px;
@@ -438,7 +472,7 @@
     .modal-body ul {
       padding-left: 20px;
       font-size: 0.95rem;
-      color: #444;
+      color: var(--text-primary);
       line-height: 1.6;
       margin: 0;
     }
@@ -462,34 +496,20 @@
       font-size: 1rem;
     }
 
-    .kakao {
-      background: #fee500;
-      color: #3c1e1e;
-    }
-
-    .insta {
-      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
-    }
+    .kakao { background: #fee500; color: #3c1e1e; }
+    .insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
 
     footer {
       text-align: center;
       padding: 40px 20px;
       font-size: 0.85rem;
-      color: #aaa;
-      background: #fafafa;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
     }
 
-    /* 반응형: PC */
     @media (min-width: 650px) {
-      .staff-container {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .staff-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 30px 20px;
-      }
+      .staff-container { grid-template-columns: repeat(3, 1fr); }
+      .staff-card { flex-direction: column; text-align: center; padding: 30px 20px; }
     }
   </style>
 </head>
@@ -497,6 +517,8 @@
 <body>
   <div class="app-container">
     <header>
+      <button id="theme-toggle" class="theme-toggle" aria-label="다크모드 전환">🌙</button>
+      
       <img src="img_vlog_icon.png" alt="vlog 아이콘" class="header-logo" onclick="location.reload()" />
       <p>당신의 가장 빛나는 순간을, VLog가 기록합니다.</p>
     </header>
@@ -546,12 +568,11 @@
         <img src="img_wicked.png" alt="모집 포스터" class="poster-img" />
 
         <h3>연습실 안내</h3>
-        <p style="font-size: 1rem; color: #666">📍 서울 성북구 동선동1가 85-101 (VLog 성신여대입구역 연습실)</p>
+        <p style="font-size: 1rem; color: var(--text-secondary)">📍 서울 성북구 동선동1가 85-101 (VLog 성신여대입구역 연습실)</p>
       </div>
 
       <div id="staff" class="tab-content">
         <h2>DIRECTOR</h2>
-        <!-- <p style="color: #888; margin-bottom: 25px; font-size: 0.9rem">이미지를 클릭하면 상세 경력을 볼 수 있습니다.</p> -->
 
         <div class="staff-container">
           <div class="staff-card" onclick="openModal('staff1')">
@@ -581,8 +602,7 @@
       <div id="qa" class="tab-content">
         <h2>자주 묻는 질문</h2>
         <div class="section-box">
-          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을
-            진행합니다.</p>
+          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을 진행합니다.</p>
           <p><strong>Q. 활동비는 얼마인가요?</strong><br />A. 연습실 대관료 및 공연 제작비를 위해 매월 소정의 단비가 책정됩니다.</p>
         </div>
 
@@ -605,6 +625,29 @@
   </div>
 
   <script>
+    // --- 🌙 다크모드 로직 추가 ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    
+    // 1. 기존 설정 불러오기
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // 2. 버튼 클릭 시 테마 전환
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      // 아이콘 변경
+      themeToggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // --- 기존 탭/모달 로직 유지 ---
     function switchTab(tabId) {
       document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
       document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
@@ -622,9 +665,7 @@
         career: [
           {
             category: "학력",
-            items: [
-              "중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업"
-            ]
+            items: ["중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업"]
           },
           {
             category: "단편 <겨울은 겨울> (2017) 감독",
@@ -637,16 +678,11 @@
           },
           {
             category: "단편 <일렁일렁> (2020) 감독",
-            items: [
-              "영진위 뉴미디어 영상콘텐츠 제작지원작",
-              "인디스토리 배급"
-            ]
+            items: ["영진위 뉴미디어 영상콘텐츠 제작지원작", "인디스토리 배급"]
           },
           {
             category: "단편 <CONTACT> (2022) 감독",
-            items: [
-              "한국문화예술진흥위원회 / 안은미 컴퍼니 제작지원작",
-            ]
+            items: ["한국문화예술진흥위원회 / 안은미 컴퍼니 제작지원작"]
           }
         ]
       },
@@ -657,10 +693,7 @@
         career: [
           {
             category: "방송",
-            items: [
-              "2017 웹드라마 <굿모닝 이층버스> 학생 단역",
-              "2026 단편영화 <이벤트> 지수 역"
-            ]
+            items: ["2017 웹드라마 <굿모닝 이층버스> 학생 단역", "2026 단편영화 <이벤트> 지수 역"]
           },
           {
             category: "연극",
@@ -693,17 +726,11 @@
         career: [
           {
             category: "학력 및 이력",
-            items: [
-              "한예종 현대무용 전공",
-              "국립현대무용단 프로젝트 단원"
-            ]
+            items: ["한예종 현대무용 전공", "국립현대무용단 프로젝트 단원"]
           },
           {
             category: "안무 및 교육",
-            items: [
-              "연극 '움직이는 밤' 안무 총괄",
-              "신체 표현 워크숍 전문 강사"
-            ]
+            items: ["연극 '움직이는 밤' 안무 총괄", "신체 표현 워크숍 전문 강사"]
           }
         ]
       }
@@ -721,11 +748,12 @@
         </div>
       `).join("");
 
+      // 인라인 스타일도 다크모드 대응을 위해 var(--text-secondary)로 수정
       const html = `
         <div class="modal-header">
           <img src="${data.img}" alt="${data.name}">
-          <h3>${data.name}</h3>
-          <p style="color:#777; font-weight:500; margin:0;">${data.role}</p>
+          <h3 style="color: var(--text-heading); margin: 0 0 5px 0;">${data.name}</h3>
+          <p style="color: var(--text-secondary); font-weight:500; margin:0;">${data.role}</p>
         </div>
         <div class="modal-body">
           <h4>주요 경력</h4>
