@@ -9,10 +9,14 @@
     /* --- 🌟 1. 테마 변수 설정 (라이트/다크) --- */
     :root {
       --bg-primary: #ffffff;
-      --bg-secondary: #f5f5f5; /* 헤더, 푸터 등 */
-      --bg-tertiary: #f9fafb; /* 섹션 박스 등 */
-      --bg-card: #ffffff; /* 카드, 모달 배경 */
-      --bg-badge: #f0f0f0; /* 경력 뱃지 등 */
+      --bg-secondary: #f5f5f5;
+      /* 헤더, 푸터 등 */
+      --bg-tertiary: #f9fafb;
+      /* 섹션 박스 등 */
+      --bg-card: #ffffff;
+      /* 카드, 모달 배경 */
+      --bg-badge: #f0f0f0;
+      /* 경력 뱃지 등 */
 
       --text-primary: #333333;
       --text-secondary: #666666;
@@ -22,8 +26,10 @@
       --border-color: #e0e0e0;
       --border-light: #eeeeee;
 
-      --accent-color: #111111; /* 포인트 컬러 (기존 검정) */
-      --accent-text: #ffffff; /* 포인트 컬러 위 글자색 */
+      --accent-color: #111111;
+      /* 포인트 컬러 (기존 검정) */
+      --accent-text: #ffffff;
+      /* 포인트 컬러 위 글자색 */
 
       --shadow-color: rgba(0, 0, 0, 0.05);
       --modal-overlay: rgba(0, 0, 0, 0.75);
@@ -44,7 +50,8 @@
       --border-color: #333333;
       --border-light: #2a2a2a;
 
-      --accent-color: #ffffff; /* 다크모드에선 포인트가 흰색으로 반전 */
+      --accent-color: #ffffff;
+      /* 다크모드에선 포인트가 흰색으로 반전 */
       --accent-text: #111111;
 
       --shadow-color: rgba(0, 0, 0, 0.3);
@@ -99,7 +106,8 @@
       display: flex;
       flex-direction: column;
       overflow-x: clip;
-      position: relative; /* 토글 버튼 기준점 */
+      position: relative;
+      /* 토글 버튼 기준점 */
     }
 
     /* --- 헤더 --- */
@@ -178,11 +186,19 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    h2, h3 {
+    h2,
+    h3 {
       color: var(--text-heading);
     }
 
@@ -441,9 +457,18 @@
       flex: 1;
     }
 
-    .modal-body::-webkit-scrollbar { width: 6px; }
-    .modal-body::-webkit-scrollbar-track { background: transparent; }
-    .modal-body::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+    .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 3px;
+    }
 
     .modal-body h4 {
       margin: 0 0 15px 0;
@@ -496,8 +521,14 @@
       font-size: 1rem;
     }
 
-    .kakao { background: #fee500; color: #3c1e1e; }
-    .insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+    .kakao {
+      background: #fee500;
+      color: #3c1e1e;
+    }
+
+    .insta {
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    }
 
     footer {
       text-align: center;
@@ -508,8 +539,15 @@
     }
 
     @media (min-width: 650px) {
-      .staff-container { grid-template-columns: repeat(3, 1fr); }
-      .staff-card { flex-direction: column; text-align: center; padding: 30px 20px; }
+      .staff-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .staff-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+      }
     }
   </style>
 </head>
@@ -518,7 +556,7 @@
   <div class="app-container">
     <header>
       <button id="theme-toggle" class="theme-toggle" aria-label="다크모드 전환">🌙</button>
-      
+
       <img src="img_vlog_icon.png" alt="vlog 아이콘" class="header-logo" onclick="location.reload()" />
       <p>당신의 가장 빛나는 순간을, VLog가 기록합니다.</p>
     </header>
@@ -576,23 +614,23 @@
 
         <div class="staff-container">
           <div class="staff-card" onclick="openModal('staff1')">
-            <img src="img_teacher_gayeon.jpg" alt="신가연" class="staff-thumb" />
+            <img src="img_teacher_director.jpg" alt="신가연" class="staff-thumb" />
             <div class="staff-info">
               <h4>신가연</h4>
               <p>총괄 연출</p>
             </div>
           </div>
           <div class="staff-card" onclick="openModal('staff2')">
-            <img src="img_teacher_chu.jpg" alt="추소영" class="staff-thumb" />
+            <img src="img_teacher_vocal.jpg" alt="추소영" class="staff-thumb" />
             <div class="staff-info">
               <h4>추소영</h4>
               <p>음악 & 연기 코치</p>
             </div>
           </div>
           <div class="staff-card" onclick="openModal('staff3')">
-            <img src="https://picsum.photos/300/300?random=4" alt="안무 코치" class="staff-thumb" />
+            <img src="img_teacher_dance.png" alt="안무 코치" class="staff-thumb" />
             <div class="staff-info">
-              <h4>안무 코치</h4>
+              <h4>김동은</h4>
               <p>안무 코치</p>
             </div>
           </div>
@@ -602,7 +640,8 @@
       <div id="qa" class="tab-content">
         <h2>자주 묻는 질문</h2>
         <div class="section-box">
-          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을 진행합니다.</p>
+          <p style="margin-bottom: 15px"><strong>Q. 가입 신청 후 절차가 궁금해요.</strong><br />A. 신청서 검토 후 개별 연락을 드리며, 가벼운 미팅을
+            진행합니다.</p>
           <p><strong>Q. 활동비는 얼마인가요?</strong><br />A. 연습실 대관료 및 공연 제작비를 위해 매월 소정의 단비가 책정됩니다.</p>
         </div>
 
@@ -627,7 +666,7 @@
   <script>
     // --- 🌙 다크모드 로직 추가 ---
     const themeToggleBtn = document.getElementById('theme-toggle');
-    
+
     // 1. 기존 설정 불러오기
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -639,10 +678,10 @@
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
+
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      
+
       // 아이콘 변경
       themeToggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
     });
@@ -661,7 +700,7 @@
       staff1: {
         name: "신가연",
         role: "총괄 연출",
-        img: "img_teacher_gayeon.jpg",
+        img: "img_teacher_director.jpg",
         career: [
           {
             category: "학력",
@@ -689,7 +728,7 @@
       staff2: {
         name: "추소영",
         role: "음악 & 연기 코치",
-        img: "img_teacher_chu.jpg",
+        img: "img_teacher_vocal.jpg",
         career: [
           {
             category: "방송",
@@ -720,17 +759,30 @@
         ]
       },
       staff3: {
-        name: "안무 코치",
+        name: "김동은",
         role: "안무 코치",
-        img: "https://picsum.photos/300/300?random=4",
+        img: "img_teacher_dance.png",
         career: [
           {
-            category: "학력 및 이력",
-            items: ["한예종 현대무용 전공", "국립현대무용단 프로젝트 단원"]
+            category: "뮤지컬",
+            items: [
+              "2022 <아리아라리> 뭉치役",
+              "2023 <점프점프> 멀티役",
+              "2024 <청아> 기장役",
+              "2024 <아이스웨어> 멀티役",
+              "2024 <나도밤나무> 호랑이役",
+              "2024 <너와나 이곳의 우리> 홍준役",
+              "2025 <쇼미더스쿨> 다임役"]
           },
           {
-            category: "안무 및 교육",
-            items: ["연극 '움직이는 밤' 안무 총괄", "신체 표현 워크숍 전문 강사"]
+            category: "공연",
+            items: [
+              "2016 천안흥타령 <난타> ‘대상’ 2023 <앨리스> 요리사役",
+              "2024 <훈민정음> 백성役",
+              "2024 <선녀와나무꾼> 사슴役",
+              "2025 <토끼야 수궁가자> 조연출",
+              "2025 <씨앗씨> 씨앗役"
+            ]
           }
         ]
       }
