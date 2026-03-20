@@ -977,15 +977,19 @@
       const activeSliders = document.querySelectorAll('.tab-content.active .image-slider');
       
       activeSliders.forEach(slider => {
-        const step = slider.clientWidth; // 한 장의 가로 길이
-        if (step === 0) return; // 화면에 안 보일 땐 건너뜀
+        // 첫 번째 사진 요소를 찾아 실제 너비를 구합니다.
+        const slideItem = slider.querySelector('.slide-item');
+        if (!slideItem) return; // 사진이 없으면 패스
         
-        // 끝까지 스크롤 되었는지 확인 (여유 오차 10px 둠)
-        if (slider.scrollLeft + step >= slider.scrollWidth - 10) {
-          // 끝이면 처음으로 휙 돌아감
+        // 이동할 거리 = 사진 1장 너비 + 사진 사이 간격(15px)
+        const step = slideItem.clientWidth + 15; 
+        
+        // 스크롤이 끝까지 도달했는지 확인 (여유 오차 20px 둠)
+        if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 20) {
+          // 끝이면 처음으로 스르륵 돌아감
           slider.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          // 아니면 다음 사진으로 부드럽게 이동
+          // 아니면 다음 사진으로 정확히 한 장만큼 부드럽게 이동
           slider.scrollBy({ left: step, behavior: 'smooth' });
         }
       });
