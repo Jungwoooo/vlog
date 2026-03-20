@@ -549,6 +549,108 @@
         padding: 30px 20px;
       }
     }
+
+    /* --- [탭4] 연습실 안내 --- */
+    .studio-section {
+      margin-bottom: 40px;
+    }
+
+    .studio-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--text-heading);
+    }
+
+    .swipe-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-bottom: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* CSS 스와이프 슬라이더 핵심 */
+    .image-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 15px;
+      padding-bottom: 15px; /* 스크롤바 공간 확보 */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    /* 커스텀 스크롤바 디자인 */
+    .image-slider::-webkit-scrollbar {
+      height: 6px;
+    }
+    .image-slider::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+      border-radius: 10px;
+    }
+    .image-slider::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 10px;
+    }
+
+    .slide-item {
+      flex: 0 0 100%; /* 한 화면에 사진 한 장씩 꽉 차게 */
+      scroll-snap-align: center;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px var(--shadow-color);
+    }
+
+    .slide-item img {
+      width: 100%;
+      aspect-ratio: 16 / 9; /* 모든 사진을 균일한 비율로 맞춤 */
+      object-fit: cover; /* 사진이 찌그러지지 않게 채움 */
+      display: block;
+    }
+
+    .studio-info {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .studio-info p {
+      margin: 5px 0;
+    }
+
+    /* --- 네이버 링크 버튼 --- */
+    .btn-naver {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #03c75a; /* 네이버 시그니처 그린 */
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-top: 15px;
+      width: 100%; /* 버튼을 가로로 꽉 채우려면 유지, 글자 크기에 맞추려면 안 쓰셔도 됩니다 */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-naver:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(3, 199, 90, 0.4);
+    }
   </style>
 </head>
 
@@ -563,6 +665,7 @@
 
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('apply')">배우 신청</button>
+      <button class="tab-btn" onclick="switchTab('studio')">연습실</button>
       <button class="tab-btn" onclick="switchTab('staff')">DIRECTOR</button>
       <button class="tab-btn" onclick="switchTab('qa')">Q&A</button>
     </div>
@@ -605,8 +708,8 @@
         <h2>공연 포스터</h2>
         <img src="img_wicked.png" alt="모집 포스터" class="poster-img" />
 
-        <h3>연습실 안내</h3>
-        <p style="font-size: 1rem; color: var(--text-secondary)">📍 서울 성북구 동선동1가 85-101 (VLog 성신여대입구역 연습실)</p>
+        <!-- <h3>연습실 안내</h3> -->
+        <!-- <p style="font-size: 1rem; color: var(--text-secondary)">📍 서울 성북구 동선동1가 85-101 (VLog 성신여대입구역 연습실)</p> -->
       </div>
 
       <div id="staff" class="tab-content">
@@ -650,6 +753,52 @@
         <div class="sns-links">
           <a href="https://open.kakao.com/o/sT3v1xki" target="_blank" class="btn-sns kakao">💬 카카오톡 오픈채팅 문의</a>
           <a href="https://instagram.com/vlog_musical" target="_blank" class="btn-sns insta">📸 인스타그램 @vlog_musical</a>
+        </div>
+      </div>
+
+      <div id="studio" class="tab-content">
+        <h2>연습실</h2>
+
+        <div class="studio-section">
+          <h3>탄성연기스튜디오</h3>
+          <!-- <p class="swipe-hint">사진을 옆으로 넘겨보세요 👉</p> -->
+          
+          <div class="image-slider">
+            <div class="slide-item"><img src="img_tansung_studio_1.jpg" alt="탄성 스튜디오 사진 1"></div>
+            <!-- <div class="slide-item"><img src="img_tanseong_2.jpg" alt="탄성 스튜디오 사진 2"></div> -->
+            <!-- <div class="slide-item"><img src="img_tanseong_3.jpg" alt="탄성 스튜디오 사진 3"></div> -->
+          </div>
+          
+          <div class="studio-info">
+            <p><strong>📍 위치:</strong> 서울 동작구 사당로 277 지하1층</p>
+            <a href="https://naver.me/FGERRLLL" target="_blank" class="btn-naver">
+              🗺️ 네이버 지도에서 보기
+            </a>
+            <!-- <p><strong>✨ 특징:</strong> 넓은 전면 거울과 충격을 흡수하는 최고급 탄성 마루가 깔려 있어 춤과 연기 연습에 최적화된 공간입니다.</p> -->
+          </div>
+        </div>
+
+        <div class="studio-section">
+          <h3>오로라스튜디오</h3>
+          <!-- <p class="swipe-hint">사진을 옆으로 넘겨보세요 👉</p> -->
+          
+          <div class="image-slider">
+            <div class="slide-item"><img src="img_aurora_studio_1.jpg" alt="오로라 스튜디오 사진 1"></div>
+            <div class="slide-item"><img src="img_aurora_studio_2.jpg" alt="오로라 스튜디오 사진 2"></div>
+            <div class="slide-item"><img src="img_aurora_studio_3.jpg" alt="오로라 스튜디오 사진 3"></div>
+            <div class="slide-item"><img src="img_aurora_studio_4.jpg" alt="오로라 스튜디오 사진 4"></div>
+            <div class="slide-item"><img src="img_aurora_studio_5.jpg" alt="오로라 스튜디오 사진 5"></div>
+            <div class="slide-item"><img src="img_aurora_studio_6.jpg" alt="오로라 스튜디오 사진 6"></div>
+            <div class="slide-item"><img src="img_aurora_studio_7.jpg" alt="오로라 스튜디오 사진 7"></div>
+          </div>
+          
+          <div class="studio-info">
+            <p><strong>📍 위치:</strong> 서울 성북구 동선동1가 85-101</p>
+            <a href="https://naver.me/FCZYfc9y" target="_blank" class="btn-naver">
+              🗺️ 네이버 지도에서 보기
+            </a>
+            <!-- <p><strong>✨ 특징:</strong> 아늑한 조명과 깔끔한 인테리어로 보컬 및 대본 리딩에 집중하기 좋은 환경을 제공합니다.</p> -->
+          </div>
         </div>
       </div>
     </div>
@@ -822,6 +971,25 @@
         document.getElementById("staffModal").style.display = "none";
       }
     }
+
+    setInterval(() => {
+      // 현재 화면에 보이고 있는(active) 탭 안의 슬라이더만 찾음
+      const activeSliders = document.querySelectorAll('.tab-content.active .image-slider');
+      
+      activeSliders.forEach(slider => {
+        const step = slider.clientWidth; // 한 장의 가로 길이
+        if (step === 0) return; // 화면에 안 보일 땐 건너뜀
+        
+        // 끝까지 스크롤 되었는지 확인 (여유 오차 10px 둠)
+        if (slider.scrollLeft + step >= slider.scrollWidth - 10) {
+          // 끝이면 처음으로 휙 돌아감
+          slider.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          // 아니면 다음 사진으로 부드럽게 이동
+          slider.scrollBy({ left: step, behavior: 'smooth' });
+        }
+      });
+    }, 3000);
   </script>
 </body>
 
