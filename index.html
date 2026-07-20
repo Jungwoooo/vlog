@@ -14,7 +14,6 @@
   <style>
     /* --- 🌟 1. 테마 변수 설정 (공연장 컨셉 유지) --- */
     :root {
-      /* 라이트 모드 (낮의 리허설 룸 느낌) */
       --bg-primary: #ffffff;
       --bg-secondary: #f4f1ea;
       --bg-tertiary: #faf9f6;
@@ -29,18 +28,16 @@
       --border-color: #dcdcdc;
       --border-light: #eaeaea;
 
-      /* 포인트 컬러: 극장의 상징 '무대 조명(Gold)'과 '벨벳 블랙' */
       --accent-color: #111111;
       --accent-text: #ffffff;
-      --theatre-gold: #c5a059;
-      --theatre-gold-light: #e6c875;
+      --theater-gold: #c5a059;
+      --theater-gold-light: #e6c875;
       
       --glow-color: rgba(197, 160, 89, 0.3);
       --shadow-color: rgba(0, 0, 0, 0.08);
       --modal-overlay: rgba(0, 0, 0, 0.6);
     }
 
-    /* 다크 모드 (조명이 꺼진 본 공연장 느낌) */
     [data-theme="dark"] {
       --bg-primary: #0a0a0a;
       --bg-secondary: #141414;
@@ -78,9 +75,10 @@
       flex-direction: column;
       overflow-x: hidden;
       transition: background-color 0.6s ease, color 0.6s ease;
+      /* 모바일 가로 스크롤 방지 및 단어 단위 줄바꿈 유지 */
+      word-break: keep-all; 
     }
 
-    /* 폰트 적용 (제목, 인용구는 클래식한 명조체) */
     h1, h2, h3, .serif-text {
       font-family: 'Hahmlet', serif;
     }
@@ -108,23 +106,26 @@
     
     .curtain-left { 
       transform-origin: left; 
-      border-right: 2px solid var(--theatre-gold);
+      border-right: 2px solid var(--theater-gold);
     }
     .curtain-right { 
       transform-origin: right; 
-      border-left: 2px solid var(--theatre-gold);
+      border-left: 2px solid var(--theater-gold);
     }
 
+    /* 💡 모바일 글자 잘림 수정: 글자 크기를 화면 비율(clamp)에 맞게 유동적으로 조절 */
     .curtain-text {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: var(--theatre-gold);
-      font-size: 2rem;
+      color: var(--theater-gold);
+      font-size: clamp(1.2rem, 5vw, 2rem);
       font-weight: 600;
       letter-spacing: 2px;
-      white-space: nowrap;
+      white-space: normal;
+      text-align: center;
+      width: 90%;
       z-index: 100000;
       transition: opacity 0.8s ease;
       text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
@@ -140,7 +141,7 @@
       top: 25px;
       right: 20px;
       background: var(--bg-card);
-      border: 1px solid var(--theatre-gold);
+      border: 1px solid var(--theater-gold);
       border-radius: 50%;
       width: 45px;
       height: 45px;
@@ -155,7 +156,7 @@
     }
     .theme-toggle:hover {
       transform: rotate(180deg) scale(1.1);
-      box-shadow: 0 0 25px var(--theatre-gold);
+      box-shadow: 0 0 25px var(--theater-gold);
     }
 
     /* --- 헤더 --- */
@@ -185,10 +186,11 @@
 
     header p {
       margin: 15px 0 0;
-      color: var(--theatre-gold);
+      color: var(--theater-gold);
       font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: -0.5px;
+      word-break: keep-all; /* 어색한 줄바꿈 방지 */
     }
 
     /* --- 탭 메뉴 --- */
@@ -198,7 +200,7 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(100px);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -224,18 +226,12 @@
       transform: translateX(-50%);
       width: 0;
       height: 3px;
-      background: var(--theatre-gold);
+      background: var(--theater-gold);
       transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .tab-btn:hover {
-      color: var(--theatre-gold);
-    }
-    .tab-btn.active {
-      color: var(--theatre-gold);
-    }
-    .tab-btn.active::after {
-      width: 80%;
-    }
+    .tab-btn:hover { color: var(--theater-gold); }
+    .tab-btn.active { color: var(--theater-gold); }
+    .tab-btn.active::after { width: 80%; }
 
     /* --- 콘텐츠 씬(Scene) 공통 --- */
     .content-area {
@@ -254,31 +250,38 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
+    /* 💡 제목 어색한 줄바꿈 해결 */
     h2 {
       font-size: 1.8rem;
       text-align: center;
       margin: 0 0 40px 0;
       color: var(--text-heading);
       position: relative;
+      word-break: keep-all; 
     }
     h2::after {
       content: '';
       display: block;
       width: 40px;
       height: 3px;
-      background: var(--theatre-gold);
+      background: var(--theater-gold);
       margin: 15px auto 0;
     }
-    h3 { color: var(--text-heading); font-size: 1.4rem; font-family: 'Hahmlet', serif;}
+    h3 { 
+      color: var(--text-heading); 
+      font-size: 1.4rem; 
+      font-family: 'Hahmlet', serif;
+      word-break: keep-all; 
+    }
 
-    /* --- [탭1] 배우 신청 (VIP 티켓 효과) --- */
+    /* --- [탭1] 배우 신청 --- */
     .btn-ticket {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       padding: 25px;
-      background: linear-gradient(135deg, var(--theatre-gold), #aa7c11);
+      background: linear-gradient(135deg, var(--theater-gold), #aa7c11);
       color: #000;
       text-align: center;
       text-decoration: none;
@@ -291,6 +294,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
       border: 2px dashed rgba(255, 255, 255, 0.4);
+      word-break: keep-all;
     }
     .btn-ticket:hover {
       transform: translateY(-5px);
@@ -319,7 +323,7 @@
 
     .feature-card {
       background: var(--bg-card);
-      border-left: 4px solid var(--theatre-gold);
+      border-left: 4px solid var(--theater-gold);
       padding: 25px 20px;
       box-shadow: 0 5px 20px var(--shadow-color);
       transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
@@ -331,12 +335,12 @@
     }
     
     .feature-icon { font-size: 1.8rem; margin-bottom: 10px; }
-    .feature-title { font-family: 'Hahmlet', serif; font-weight: 700; font-size: 1.15rem; color: var(--text-heading); margin-bottom: 8px; }
+    .feature-title { font-family: 'Hahmlet', serif; font-weight: 700; font-size: 1.15rem; color: var(--text-heading); margin-bottom: 8px; word-break: keep-all; }
     .feature-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; margin: 0; }
 
     .highlight-box {
       background: radial-gradient(circle at center, var(--bg-tertiary), var(--bg-primary));
-      border: 1px solid var(--theatre-gold);
+      border: 1px solid var(--theater-gold);
       padding: 40px 20px;
       border-radius: 4px;
       text-align: center;
@@ -347,13 +351,14 @@
       font-family: 'Hahmlet', serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: var(--theatre-gold);
+      color: var(--theater-gold);
       margin: 0 0 15px 0;
       line-height: 1.5;
+      word-break: keep-all;
     }
     .insta-link {
       display: inline-block;
-      background: var(--theatre-gold);
+      background: var(--theater-gold);
       color: #000;
       padding: 12px 24px;
       border-radius: 25px;
@@ -391,13 +396,12 @@
       border-bottom: 1px solid var(--border-light);
       border-left: 3px solid transparent;
       cursor: pointer;
-      /* 🌟 Hover 시 레이아웃 깨짐을 방지하기 위해 padding 애니메이션 제거 */
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
     .cast-card:hover {
       background: var(--bg-tertiary);
-      border-left: 3px solid var(--theatre-gold);
-      transform: translateY(-3px); /* 전체적으로 살짝 떠오르는 느낌 */
+      border-left: 3px solid var(--theater-gold);
+      transform: translateY(-3px);
     }
 
     .cast-thumb {
@@ -415,7 +419,6 @@
 
     .cast-info {
       flex: 1;
-      /* 🌟 패딩 대신 transform으로 텍스트만 스무스하게 밀리도록 수정 */
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .cast-card:hover .cast-info {
@@ -429,10 +432,10 @@
       color: var(--text-heading);
       transition: color 0.3s;
     }
-    .cast-card:hover .cast-info h4 { color: var(--theatre-gold); }
-    .cast-info p { margin: 0; font-size: 1rem; color: var(--theatre-gold); font-weight: 600; }
+    .cast-card:hover .cast-info h4 { color: var(--theater-gold); }
+    .cast-info p { margin: 0; font-size: 1rem; color: var(--theater-gold); font-weight: 600; }
 
-    /* --- [탭3] Q&A (원본 텍스트 + 대본 스타일) --- */
+    /* --- [탭3] Q&A --- */
     .script-qa {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -456,8 +459,9 @@
       font-weight: 700;
       color: var(--text-heading);
       margin-bottom: 10px;
+      word-break: keep-all;
     }
-    .qa-q span { color: var(--theatre-gold); font-family: 'Hahmlet', serif; font-size: 1.2rem; }
+    .qa-q span { color: var(--theater-gold); font-family: 'Hahmlet', serif; font-size: 1.2rem; }
     
     .qa-a {
       display: flex;
@@ -466,7 +470,6 @@
     }
     .qa-a span { color: var(--text-primary); font-family: 'Hahmlet', serif; font-size: 1.2rem; font-weight: bold; }
 
-    /* SNS 원본 컬러 버튼 (디자인에 맞게 둥글게 다듬음) */
     .sns-links {
       display: flex;
       flex-direction: column;
@@ -531,7 +534,7 @@
       border-left: 3px solid var(--border-light);
       transition: border-color 0.3s;
     }
-    .studio-info:hover { border-color: var(--theatre-gold); }
+    .studio-info:hover { border-color: var(--theater-gold); }
 
     .btn-naver {
       display: inline-flex;
@@ -552,7 +555,7 @@
       box-shadow: 0 4px 15px rgba(3, 199, 90, 0.4);
     }
 
-    /* --- 모달 (캐스트 상세 프로필) --- */
+    /* --- 모달 --- */
     .modal {
       display: none;
       position: fixed;
@@ -591,11 +594,34 @@
       z-index: 10;
       transition: color 0.3s, transform 0.3s;
     }
-    .close-modal:hover { color: var(--theatre-gold); transform: rotate(90deg); }
+    .close-modal:hover { color: var(--theater-gold); transform: rotate(90deg); }
 
-    @media (max-width: 500px) {
-      .feature-grid { grid-template-columns: 1fr; }
+    /* 💡 모바일 최적화 (반응형 미디어 쿼리 추가) */
+    @media (max-width: 600px) {
+      .feature-grid { 
+        grid-template-columns: 1fr; 
+      }
+      
+      h2 { font-size: 1.5rem; margin-bottom: 30px; }
+      
+      .content-area { padding: 30px 15px; }
+      
+      header { padding: 30px 15px 15px; }
+      .header-logo { height: 150px; margin: -40px 0; }
+      header p { font-size: 0.95rem; }
+      
+      .theme-toggle { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 1rem; }
+      
+      .tab-btn { padding: 15px 2px; font-size: 0.95rem; }
+      
+      .btn-ticket { padding: 18px; font-size: 1.15rem; }
+      
+      .highlight-quote { font-size: 1.2rem; }
+      
+      .script-qa { padding: 20px 15px; }
+      .qa-q span, .qa-a span { font-size: 1.1rem; }
     }
+
     @media (min-width: 650px) {
       .cast-board { grid-template-columns: repeat(2, 1fr); }
     }
@@ -606,7 +632,7 @@
   <!-- 🎭 커튼콜 인트로 -->
   <div id="intro-curtain">
     <div class="curtain-panel curtain-left"></div>
-    <div class="curtain-text serif-text">MUSICAL THEATRE VLog</div>
+    <div class="curtain-text serif-text">MUSICAL THEATER VLog</div>
     <div class="curtain-panel curtain-right"></div>
   </div>
 
@@ -614,12 +640,10 @@
     <header>
       <button id="theme-toggle" class="theme-toggle" aria-label="다크모드 전환"></button>
       <img src="img_vlog_icon.png" alt="vlog 아이콘" class="header-logo" onclick="location.reload()" />
-      <!-- 원본 텍스트 -->
-      <p class="serif-text">당신의 가장 빛나는 순간을 VLog가 기록합니다.</p>
+      <p class="serif-text">당신의 가장 빛나는 순간을, VLog가 기록합니다.</p>
     </header>
 
     <div class="tabs">
-      <!-- 탭 이름도 원본으로 복구 -->
       <button class="tab-btn active" onclick="switchTab('apply')">배우 신청</button>
       <button class="tab-btn" onclick="switchTab('studio')">연습실</button>
       <button class="tab-btn" onclick="switchTab('staff')">DIRECTOR</button>
@@ -631,31 +655,25 @@
       
       <!-- [탭1] 배우 신청 -->
       <div id="apply" class="tab-content active">
-        <!-- 원본 신청 텍스트 + 티켓 디자인 -->
         <a href="https://naver.me/G1pt1gxj" target="_blank" class="btn-ticket">
           2026 신입단원 가입 신청하기
         </a>
 
-        <!-- 원본 텍스트 복구 -->
         <h2>왜 VLog와 함께해야 할까요?</h2>
         <div class="feature-grid">
           <div class="feature-card">
-            <!-- <div class="feature-icon">✨</div> -->
             <div class="feature-title">퀄리티 있는 프로필과 무대</div>
             <p class="feature-desc">인생에 남을 멋진 배역 프로필과 완성도 높은 무대를 함께 만들어갑니다.</p>
           </div>
           <div class="feature-card">
-            <!-- <div class="feature-icon">🎭</div> -->
             <div class="feature-title">과정의 '재미' 보장</div>
             <p class="feature-desc">결과도 중요하지만, 연습하는 매 순간이 즐겁고 행복한 과정을 약속합니다.</p>
           </div>
           <div class="feature-card">
-            <!-- <div class="feature-icon">🤝</div> -->
             <div class="feature-title">책임 있는 운영 (보강제도)</div>
             <p class="feature-desc">피치 못할 결석에도 안심하세요. 철저한 보강 제도로 끝까지 책임집니다.</p>
           </div>
           <div class="feature-card">
-            <!-- <div class="feature-icon">📸</div> -->
             <div class="feature-title">'기록'에 진심인 극단</div>
             <p class="feature-desc">땀 흘리는 연습부터 무대 위 모습까지, 소중한 순간들을 빠짐없이 기록합니다.</p>
           </div>
@@ -663,7 +681,7 @@
 
         <div class="highlight-box">
           <p class="highlight-quote">"당신의 가장 빛나는 순간을 VLog가 기록합니다."</p>
-          <p style="font-size: 0.95rem; color:var(--text-secondary); margin-bottom: 25px;">더 궁금한 점이 있다면 언제든 편하게 DM으로 문의해 주세요 :)</p>
+          <p style="font-size: 0.95rem; color:var(--text-secondary); margin-bottom: 25px; word-break: keep-all;">더 궁금한 점이 있다면 언제든 편하게 DM으로 문의해 주세요 :)</p>
           <a href="https://instagram.com/vlog_musical" target="_blank" class="insta-link">📸 인스타그램 @vlog_musical</a>
         </div>
 
@@ -675,7 +693,6 @@
 
       <!-- [탭2] DIRECTOR -->
       <div id="staff" class="tab-content">
-        <!-- 원본 텍스트 복구 -->
         <h2>DIRECTOR</h2>
         <div class="cast-board">
           <div class="cast-card" onclick="openModal('staff1')">
@@ -705,7 +722,6 @@
       <!-- [탭3] Q&A -->
       <div id="qa" class="tab-content">
         <h2>자주 묻는 질문</h2>
-        <!-- 대본 스타일 레이아웃 안에 원본 텍스트 100% 삽입 -->
         <div class="script-qa">
           <div class="qa-item">
             <div class="qa-q"><span>Q.</span><div>뮤지컬 경험이 없는데 괜찮나요?</div></div>
@@ -736,7 +752,6 @@
       <div id="studio" class="tab-content">
         <h2>연습실</h2>
         
-        <!-- 원본 텍스트 및 구조 복구 -->
         <div class="studio-section">
           <h3>탄성연기스튜디오</h3>
           <div class="image-slider">
@@ -769,7 +784,7 @@
     </div>
 
     <footer style="text-align:center; padding:40px 20px; font-size:0.85rem; color:var(--text-muted); background:var(--bg-secondary); font-family: 'Hahmlet', serif;">
-      &copy; musical theatre VLog.
+      &copy; 2026 THEATER TROUPE VLog. All rights reserved.
     </footer>
   </div>
 
@@ -792,7 +807,7 @@
       }, 500);
     });
 
-    // --- 🎭 2. 테마 변경 (기본값을 다크모드로 설정 추천) ---
+    // --- 🎭 2. 테마 변경 ---
     const themeToggleBtn = document.getElementById('theme-toggle');
     let savedTheme = localStorage.getItem('theme') || 'dark'; 
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -821,7 +836,7 @@
       }, 400); 
     }
 
-    // --- 🌟 모달 데이터 하드코딩 완벽 복구 ---
+    // --- 🌟 모달 데이터 하드코딩 ---
     const staffData = {
       staff1: {
         name: "신가연",
@@ -919,7 +934,7 @@
       const data = staffData[id];
       const careerHtml = data.career.map(group => `
         <div style="margin-bottom: 20px;">
-          <div style="font-family:'Hahmlet', serif; color:var(--theatre-gold); font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:5px; margin-bottom:10px;">[${group.category}]</div>
+          <div style="font-family:'Hahmlet', serif; color:var(--theater-gold); font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:5px; margin-bottom:10px;">[${group.category}]</div>
           <ul style="padding-left:20px; font-size:0.95rem; color:var(--text-primary); line-height:1.6; margin:0;">
             ${group.items.map(item => `<li style="margin-bottom:4px;">${item}</li>`).join("")}
           </ul>
@@ -927,10 +942,10 @@
       `).join("");
 
       const html = `
-        <div style="text-align:center; padding:40px 20px 20px 20px; border-bottom:3px solid var(--theatre-gold); background:var(--bg-tertiary);">
-          <img src="${data.img}" alt="${data.name}" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:15px; border:2px solid var(--theatre-gold); box-shadow:0 10px 20px var(--shadow-color);">
+        <div style="text-align:center; padding:40px 20px 20px 20px; border-bottom:3px solid var(--theater-gold); background:var(--bg-tertiary);">
+          <img src="${data.img}" alt="${data.name}" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:15px; border:2px solid var(--theater-gold); box-shadow:0 10px 20px var(--shadow-color);">
           <h3 style="color:var(--text-heading); margin:0 0 5px 0; font-size:1.6rem; font-family:'Hahmlet', serif;">${data.name}</h3>
-          <p style="color:var(--theatre-gold); font-weight:600; margin:0; font-size:1rem;">${data.role}</p>
+          <p style="color:var(--theater-gold); font-weight:600; margin:0; font-size:1rem;">${data.role}</p>
         </div>
         <div style="padding:25px 30px; overflow-y:auto; flex:1; background:var(--bg-card);">
           ${careerHtml}
