@@ -221,20 +221,22 @@
       z-index: 50;
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color);
-      overflow-x: auto;
-      /* 화면 좁을 때 가로 스와이프 */
+      
+      /* 🌟 가로 스크롤 관련 속성 추가 */
+      overflow-x: auto; 
       white-space: nowrap;
+      -webkit-overflow-scrolling: touch; /* 아이폰 등에서 부드러운 스크롤 */
     }
-
+    
     .tabs::-webkit-scrollbar {
-      display: none;
+      display: none; /* 스크롤바는 숨겨서 깔끔하게 */
     }
 
     .tab-btn {
-      flex: 1;
-      min-width: 65px;
-      /* 너무 좁아지지 않게 방어 */
-      padding: 18px 5px;
+      /* 🌟 flex: 1을 지우고 아래 속성으로 억지로 줄어드는 현상 방지 */
+      flex: 1 0 auto; 
+      padding: 18px 15px; /* 좌우 여백을 늘려 글자 겹침 방지 */
+      
       text-align: center;
       cursor: pointer;
       background: transparent;
@@ -849,7 +851,9 @@
       }
 
       .tab-btn {
-        font-size: 0.95rem;
+        padding: 15px 2px; /* 좌우 패딩을 확 줄임 */
+        font-size: 0.9rem; /* 글자 크기 축소 */
+        letter-spacing: -0.5px; /* 자간을 좁혀 공간 확보 */
       }
 
       .btn-ticket {
@@ -902,9 +906,9 @@
 
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('apply')">배우 신청</button>
-      <button class="tab-btn" onclick="switchTab('gallery')">GALLERY</button>
+      <button class="tab-btn" onclick="switchTab('gallery')">갤러리</button>
       <button class="tab-btn" onclick="switchTab('studio')">연습실</button>
-      <button class="tab-btn" onclick="switchTab('staff')">DIRECTOR</button>
+      <button class="tab-btn" onclick="switchTab('staff')">디렉터</button>
       <button class="tab-btn" onclick="switchTab('qa')">Q&A</button>
     </div>
 
@@ -1030,14 +1034,14 @@
             <img src="img_teacher_vocal.jpg" alt="추소영" class="cast-thumb" />
             <div class="cast-info">
               <h4>추소영</h4>
-              <p>음악 & 연기 코치</p>
+              <p>음악 & 연기 감독</p>
             </div>
           </div>
           <div class="cast-card" onclick="openModal('staff3')">
-            <img src="img_teacher_dance.png" alt="안무 코치" class="cast-thumb" />
+            <img src="img_teacher_dance.png" alt="김동은" class="cast-thumb" />
             <div class="cast-info">
               <h4>김동은</h4>
-              <p>안무 코치</p>
+              <p>안무 감독</p>
             </div>
           </div>
         </div>
