@@ -5,14 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>극단 VLog</title>
-  
-  <!-- 🌟 구글 폰트 추가 (클래식한 명조체 & 깔끔한 고딕체) -->
+
+  <!-- 🌟 구글 폰트 추가 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
-    /* --- 🌟 1. 테마 변수 설정 (공연장 컨셉 유지) --- */
+    /* --- 🌟 1. 테마 변수 설정 (공연장 컨셉) --- */
     :root {
       --bg-primary: #ffffff;
       --bg-secondary: #f4f1ea;
@@ -30,9 +32,9 @@
 
       --accent-color: #111111;
       --accent-text: #ffffff;
-      --theater-gold: #c5a059;
-      --theater-gold-light: #e6c875;
-      
+      --theatre-gold: #c5a059;
+      --theatre-gold-light: #e6c875;
+
       --glow-color: rgba(197, 160, 89, 0.3);
       --shadow-color: rgba(0, 0, 0, 0.08);
       --modal-overlay: rgba(0, 0, 0, 0.6);
@@ -55,10 +57,10 @@
 
       --accent-color: #c5a059;
       --accent-text: #000000;
-      
+
       --glow-color: rgba(197, 160, 89, 0.15);
-      --shadow-color: rgba(0, 0, 0, 0.6);
-      --modal-overlay: rgba(0, 0, 0, 0.85);
+      --shadow-color: rgba(0, 0, 0, 0.8);
+      --modal-overlay: rgba(0, 0, 0, 0.9);
     }
 
     * {
@@ -75,11 +77,13 @@
       flex-direction: column;
       overflow-x: hidden;
       transition: background-color 0.6s ease, color 0.6s ease;
-      /* 모바일 가로 스크롤 방지 및 단어 단위 줄바꿈 유지 */
-      word-break: keep-all; 
+      word-break: keep-all;
     }
 
-    h1, h2, h3, .serif-text {
+    h1,
+    h2,
+    h3,
+    .serif-text {
       font-family: 'Hahmlet', serif;
     }
 
@@ -92,7 +96,7 @@
       pointer-events: none;
       background: transparent;
     }
-    
+
     .curtain-panel {
       width: 50%;
       height: 100%;
@@ -103,23 +107,23 @@
       align-items: center;
       justify-content: center;
     }
-    
-    .curtain-left { 
-      transform-origin: left; 
-      border-right: 2px solid var(--theater-gold);
-    }
-    .curtain-right { 
-      transform-origin: right; 
-      border-left: 2px solid var(--theater-gold);
+
+    .curtain-left {
+      border-right: 2px solid var(--theatre-gold);
+      transform-origin: left;
     }
 
-    /* 💡 모바일 글자 잘림 수정: 글자 크기를 화면 비율(clamp)에 맞게 유동적으로 조절 */
+    .curtain-right {
+      border-left: 2px solid var(--theatre-gold);
+      transform-origin: right;
+    }
+
     .curtain-text {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: var(--theater-gold);
+      color: var(--theatre-gold);
       font-size: clamp(1.2rem, 5vw, 2rem);
       font-weight: 600;
       letter-spacing: 2px;
@@ -131,9 +135,17 @@
       text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
     }
 
-    body.show-started .curtain-left { transform: translateX(-100%); }
-    body.show-started .curtain-right { transform: translateX(100%); }
-    body.show-started .curtain-text { opacity: 0; }
+    body.show-started .curtain-left {
+      transform: translateX(-100%);
+    }
+
+    body.show-started .curtain-right {
+      transform: translateX(100%);
+    }
+
+    body.show-started .curtain-text {
+      opacity: 0;
+    }
 
     /* --- 다크모드 토글 버튼 --- */
     .theme-toggle {
@@ -141,7 +153,7 @@
       top: 25px;
       right: 20px;
       background: var(--bg-card);
-      border: 1px solid var(--theater-gold);
+      border: 1px solid var(--theatre-gold);
       border-radius: 50%;
       width: 45px;
       height: 45px;
@@ -154,9 +166,10 @@
       z-index: 100;
       transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
+
     .theme-toggle:hover {
       transform: rotate(180deg) scale(1.1);
-      box-shadow: 0 0 25px var(--theater-gold);
+      box-shadow: 0 0 25px var(--theatre-gold);
     }
 
     /* --- 헤더 --- */
@@ -180,20 +193,26 @@
     }
 
     @keyframes stageFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     header p {
       margin: 15px 0 0;
-      color: var(--theater-gold);
+      color: var(--theatre-gold);
       font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: -0.5px;
-      word-break: keep-all; /* 어색한 줄바꿈 방지 */
     }
 
-    /* --- 탭 메뉴 --- */
+    /* --- 탭 메뉴 (5개 탭을 위해 스크롤 지원 및 너비 조정) --- */
     .tabs {
       display: flex;
       background: rgba(var(--bg-primary), 0.95);
@@ -202,11 +221,20 @@
       z-index: 50;
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color);
+      overflow-x: auto;
+      /* 화면 좁을 때 가로 스와이프 */
+      white-space: nowrap;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
     }
 
     .tab-btn {
       flex: 1;
-      padding: 20px 5px;
+      min-width: 65px;
+      /* 너무 좁아지지 않게 방어 */
+      padding: 18px 5px;
       text-align: center;
       cursor: pointer;
       background: transparent;
@@ -218,6 +246,7 @@
       position: relative;
       transition: color 0.4s;
     }
+
     .tab-btn::after {
       content: '';
       position: absolute;
@@ -226,12 +255,18 @@
       transform: translateX(-50%);
       width: 0;
       height: 3px;
-      background: var(--theater-gold);
+      background: var(--theatre-gold);
       transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .tab-btn:hover { color: var(--theater-gold); }
-    .tab-btn.active { color: var(--theater-gold); }
-    .tab-btn.active::after { width: 80%; }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: var(--theatre-gold);
+    }
+
+    .tab-btn.active::after {
+      width: 80%;
+    }
 
     /* --- 콘텐츠 씬(Scene) 공통 --- */
     .content-area {
@@ -242,36 +277,42 @@
       flex-grow: 1;
       transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
     }
+
     .content-area.scene-changing {
       opacity: 0;
       transform: scale(0.98);
     }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content {
+      display: none;
+    }
 
-    /* 💡 제목 어색한 줄바꿈 해결 */
+    .tab-content.active {
+      display: block;
+    }
+
     h2 {
       font-size: 1.8rem;
       text-align: center;
       margin: 0 0 40px 0;
       color: var(--text-heading);
       position: relative;
-      word-break: keep-all; 
+      word-break: keep-all;
     }
+
     h2::after {
       content: '';
       display: block;
       width: 40px;
       height: 3px;
-      background: var(--theater-gold);
+      background: var(--theatre-gold);
       margin: 15px auto 0;
     }
-    h3 { 
-      color: var(--text-heading); 
-      font-size: 1.4rem; 
+
+    h3 {
+      color: var(--text-heading);
+      font-size: 1.4rem;
       font-family: 'Hahmlet', serif;
-      word-break: keep-all; 
     }
 
     /* --- [탭1] 배우 신청 --- */
@@ -281,7 +322,7 @@
       justify-content: center;
       width: 100%;
       padding: 25px;
-      background: linear-gradient(135deg, var(--theater-gold), #aa7c11);
+      background: linear-gradient(135deg, var(--theatre-gold), #aa7c11);
       color: #000;
       text-align: center;
       text-decoration: none;
@@ -294,24 +335,37 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
       border: 2px dashed rgba(255, 255, 255, 0.4);
-      word-break: keep-all;
     }
+
     .btn-ticket:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 40px var(--glow-color);
     }
+
     .btn-ticket::before {
       content: '';
       position: absolute;
-      top: 0; left: -150%; width: 100%; height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+      top: 0;
+      left: -150%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
       transform: skewX(-20deg);
       animation: ticketShine 4s infinite;
     }
+
     @keyframes ticketShine {
-      0% { left: -150%; }
-      30% { left: 150%; }
-      100% { left: 150%; }
+      0% {
+        left: -150%;
+      }
+
+      30% {
+        left: 150%;
+      }
+
+      100% {
+        left: 150%;
+      }
     }
 
     .feature-grid {
@@ -323,42 +377,60 @@
 
     .feature-card {
       background: var(--bg-card);
-      border-left: 4px solid var(--theater-gold);
+      border-left: 4px solid var(--theatre-gold);
       padding: 25px 20px;
       box-shadow: 0 5px 20px var(--shadow-color);
       transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
     }
+
     .feature-card:hover {
       transform: translateY(-8px);
       background: var(--bg-tertiary);
       box-shadow: 0 10px 30px var(--glow-color);
     }
-    
-    .feature-icon { font-size: 1.8rem; margin-bottom: 10px; }
-    .feature-title { font-family: 'Hahmlet', serif; font-weight: 700; font-size: 1.15rem; color: var(--text-heading); margin-bottom: 8px; word-break: keep-all; }
-    .feature-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-title {
+      font-family: 'Hahmlet', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-heading);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
 
     .highlight-box {
       background: radial-gradient(circle at center, var(--bg-tertiary), var(--bg-primary));
-      border: 1px solid var(--theater-gold);
+      border: 1px solid var(--theatre-gold);
       padding: 40px 20px;
       border-radius: 4px;
       text-align: center;
       margin-bottom: 50px;
       box-shadow: 0 10px 30px var(--shadow-color);
     }
+
     .highlight-quote {
       font-family: 'Hahmlet', serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: var(--theater-gold);
+      color: var(--theatre-gold);
       margin: 0 0 15px 0;
       line-height: 1.5;
-      word-break: keep-all;
     }
+
     .insta-link {
       display: inline-block;
-      background: var(--theater-gold);
+      background: var(--theatre-gold);
       color: #000;
       padding: 12px 24px;
       border-radius: 25px;
@@ -366,6 +438,7 @@
       text-decoration: none;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .insta-link:hover {
       transform: scale(1.05);
       box-shadow: 0 5px 15px var(--glow-color);
@@ -379,15 +452,79 @@
       box-shadow: 0 15px 40px var(--shadow-color);
       margin-bottom: 30px;
     }
-    .poster-img { width: 100%; display: block; }
 
-    /* --- [탭2] 운영진 소개 (CAST) --- */
+    .poster-img {
+      width: 100%;
+      display: block;
+    }
+
+    /* --- 📸 [새 탭] GALLERY (갤러리 구조) --- */
+    .gallery-section {
+      margin-bottom: 50px;
+    }
+
+    .gallery-section h3 {
+      font-size: 1.4rem;
+      color: var(--theatre-gold);
+      border-left: 3px solid var(--theatre-gold);
+      padding-left: 10px;
+      margin-bottom: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 모바일에서는 2칸씩 */
+      gap: 15px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      /* 정사각형 비율 */
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px var(--shadow-color);
+      cursor: pointer;
+      background: var(--bg-secondary);
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .gallery-item::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      font-size: 2rem;
+      opacity: 0;
+      transition: transform 0.3s, opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+      filter: brightness(0.6);
+      /* 어두워지며 돋보기 표시 */
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* --- [탭3] 운영진 소개 (CAST) --- */
     .cast-board {
       display: grid;
       grid-template-columns: 1fr;
       gap: 25px;
     }
-    
+
     .cast-card {
       display: flex;
       align-items: center;
@@ -398,9 +535,10 @@
       cursor: pointer;
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
+
     .cast-card:hover {
       background: var(--bg-tertiary);
-      border-left: 3px solid var(--theater-gold);
+      border-left: 3px solid var(--theatre-gold);
       transform: translateY(-3px);
     }
 
@@ -412,6 +550,7 @@
       filter: grayscale(20%);
       transition: filter 0.4s, transform 0.4s;
     }
+
     .cast-card:hover .cast-thumb {
       filter: grayscale(0%);
       transform: scale(1.05) rotate(3deg);
@@ -421,6 +560,7 @@
       flex: 1;
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     .cast-card:hover .cast-info {
       transform: translateX(12px);
     }
@@ -432,10 +572,19 @@
       color: var(--text-heading);
       transition: color 0.3s;
     }
-    .cast-card:hover .cast-info h4 { color: var(--theater-gold); }
-    .cast-info p { margin: 0; font-size: 1rem; color: var(--theater-gold); font-weight: 600; }
 
-    /* --- [탭3] Q&A --- */
+    .cast-card:hover .cast-info h4 {
+      color: var(--theatre-gold);
+    }
+
+    .cast-info p {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--theatre-gold);
+      font-weight: 600;
+    }
+
+    /* --- [탭4] Q&A --- */
     .script-qa {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -451,24 +600,39 @@
       border-bottom: 1px dashed var(--border-light);
       padding-bottom: 20px;
     }
-    .qa-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
-    
+
+    .qa-item:last-child {
+      border: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
     .qa-q {
       display: flex;
       gap: 10px;
       font-weight: 700;
       color: var(--text-heading);
       margin-bottom: 10px;
-      word-break: keep-all;
     }
-    .qa-q span { color: var(--theater-gold); font-family: 'Hahmlet', serif; font-size: 1.2rem; }
-    
+
+    .qa-q span {
+      color: var(--theatre-gold);
+      font-family: 'Hahmlet', serif;
+      font-size: 1.2rem;
+    }
+
     .qa-a {
       display: flex;
       gap: 10px;
       color: var(--text-secondary);
     }
-    .qa-a span { color: var(--text-primary); font-family: 'Hahmlet', serif; font-size: 1.2rem; font-weight: bold; }
+
+    .qa-a span {
+      color: var(--text-primary);
+      font-family: 'Hahmlet', serif;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
 
     .sns-links {
       display: flex;
@@ -476,6 +640,7 @@
       gap: 12px;
       margin-top: 20px;
     }
+
     .btn-sns {
       display: flex;
       align-items: center;
@@ -489,16 +654,26 @@
       font-size: 1.05rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .btn-sns:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 15px var(--shadow-color);
     }
-    .kakao { background: #fee500; color: #3c1e1e; }
-    .insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
 
-    /* --- [탭4] 연습실 안내 --- */
-    .studio-section { margin-bottom: 50px; }
-    
+    .kakao {
+      background: #fee500;
+      color: #3c1e1e;
+    }
+
+    .insta {
+      background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    }
+
+    /* --- [탭5] 연습실 안내 --- */
+    .studio-section {
+      margin-bottom: 50px;
+    }
+
     .image-slider {
       display: flex;
       overflow-x: auto;
@@ -507,7 +682,11 @@
       padding-bottom: 15px;
       scrollbar-width: none;
     }
-    .image-slider::-webkit-scrollbar { display: none; }
+
+    .image-slider::-webkit-scrollbar {
+      display: none;
+    }
+
     .slide-item {
       flex: 0 0 100%;
       scroll-snap-align: center;
@@ -515,6 +694,7 @@
       overflow: hidden;
       box-shadow: 0 8px 20px var(--shadow-color);
     }
+
     .slide-item img {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -522,7 +702,10 @@
       display: block;
       transition: transform 0.5s ease;
     }
-    .slide-item:hover img { transform: scale(1.03); }
+
+    .slide-item:hover img {
+      transform: scale(1.03);
+    }
 
     .studio-info {
       background: var(--bg-card);
@@ -534,7 +717,10 @@
       border-left: 3px solid var(--border-light);
       transition: border-color 0.3s;
     }
-    .studio-info:hover { border-color: var(--theater-gold); }
+
+    .studio-info:hover {
+      border-color: var(--theatre-gold);
+    }
 
     .btn-naver {
       display: inline-flex;
@@ -550,16 +736,20 @@
       margin-top: 15px;
       transition: transform 0.2s, box-shadow 0.2s;
     }
+
     .btn-naver:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(3, 199, 90, 0.4);
     }
 
-    /* --- 모달 --- */
+    /* --- 모달 (프로필 & 사진 공통) --- */
     .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: var(--modal-overlay);
       backdrop-filter: blur(8px);
       z-index: 999;
@@ -568,9 +758,19 @@
       padding: 20px;
       opacity: 0;
     }
-    .modal.show { display: flex; animation: modalFadeIn 0.4s forwards; }
-    @keyframes modalFadeIn { to { opacity: 1; } }
 
+    .modal.show {
+      display: flex;
+      animation: modalFadeIn 0.3s forwards;
+    }
+
+    @keyframes modalFadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* 프로필 모달 콘텐츠 */
     .modal-content {
       background: var(--bg-card);
       width: 100%;
@@ -579,11 +779,23 @@
       max-height: 85vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       border: 1px solid var(--border-color);
       border-radius: 16px;
       overflow: hidden;
     }
+
+    /* 사진 확대 전용 모달 콘텐츠 (배경 투명) */
+    .modal-content.image-only {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      align-items: center;
+      justify-content: center;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
     .close-modal {
       position: absolute;
       top: 15px;
@@ -594,36 +806,81 @@
       z-index: 10;
       transition: color 0.3s, transform 0.3s;
     }
-    .close-modal:hover { color: var(--theater-gold); transform: rotate(90deg); }
 
-    /* 💡 모바일 최적화 (반응형 미디어 쿼리 추가) */
+    .close-modal:hover {
+      color: var(--theatre-gold);
+      transform: rotate(90deg);
+    }
+
+    /* 💡 모바일 최적화 (반응형) */
     @media (max-width: 600px) {
-      .feature-grid { 
-        grid-template-columns: 1fr; 
+      .feature-grid {
+        grid-template-columns: 1fr;
       }
-      
-      h2 { font-size: 1.5rem; margin-bottom: 30px; }
-      
-      .content-area { padding: 30px 15px; }
-      
-      header { padding: 30px 15px 15px; }
-      .header-logo { height: 150px; margin: -40px 0; }
-      header p { font-size: 0.95rem; }
-      
-      .theme-toggle { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 1rem; }
-      
-      .tab-btn { padding: 15px 2px; font-size: 0.95rem; }
-      
-      .btn-ticket { padding: 18px; font-size: 1.15rem; }
-      
-      .highlight-quote { font-size: 1.2rem; }
-      
-      .script-qa { padding: 20px 15px; }
-      .qa-q span, .qa-a span { font-size: 1.1rem; }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+      }
+
+      .content-area {
+        padding: 30px 15px;
+      }
+
+      header {
+        padding: 30px 15px 15px;
+      }
+
+      .header-logo {
+        height: 150px;
+        margin: -40px 0;
+      }
+
+      header p {
+        font-size: 0.95rem;
+      }
+
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .tab-btn {
+        font-size: 0.95rem;
+      }
+
+      .btn-ticket {
+        padding: 18px;
+        font-size: 1.15rem;
+      }
+
+      .highlight-quote {
+        font-size: 1.2rem;
+      }
+
+      .script-qa {
+        padding: 20px 15px;
+      }
+
+      .qa-q span,
+      .qa-a span {
+        font-size: 1.1rem;
+      }
     }
 
     @media (min-width: 650px) {
-      .cast-board { grid-template-columns: repeat(2, 1fr); }
+      .cast-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      /* PC에서는 사진 3칸 */
     }
   </style>
 </head>
@@ -632,7 +889,7 @@
   <!-- 🎭 커튼콜 인트로 -->
   <div id="intro-curtain">
     <div class="curtain-panel curtain-left"></div>
-    <div class="curtain-text serif-text">MUSICAL THEATER VLog</div>
+    <div class="curtain-text serif-text">MUSICAL THEATRE VLog</div>
     <div class="curtain-panel curtain-right"></div>
   </div>
 
@@ -645,14 +902,14 @@
 
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('apply')">배우 신청</button>
+      <button class="tab-btn" onclick="switchTab('gallery')">GALLERY</button>
       <button class="tab-btn" onclick="switchTab('studio')">연습실</button>
       <button class="tab-btn" onclick="switchTab('staff')">DIRECTOR</button>
       <button class="tab-btn" onclick="switchTab('qa')">Q&A</button>
     </div>
 
-    <!-- 🎭 씬(Scene) 영역 -->
     <div class="content-area" id="main-stage">
-      
+
       <!-- [탭1] 배우 신청 -->
       <div id="apply" class="tab-content active">
         <a href="https://naver.me/G1pt1gxj" target="_blank" class="btn-ticket">
@@ -681,8 +938,9 @@
 
         <div class="highlight-box">
           <p class="highlight-quote">"당신의 가장 빛나는 순간을 VLog가 기록합니다."</p>
-          <p style="font-size: 0.95rem; color:var(--text-secondary); margin-bottom: 25px; word-break: keep-all;">더 궁금한 점이 있다면 언제든 편하게 DM으로 문의해 주세요 :)</p>
-          <a href="https://instagram.com/vlog_musical" target="_blank" class="insta-link">📸 인스타그램 @vlog_musical</a>
+          <p style="font-size: 0.95rem; color:var(--text-secondary); margin-bottom: 25px;">더 궁금한 점이 있다면 언제든 편하게 DM으로 문의해
+            주세요 :)</p>
+          <a href="https://instagram.com/vlog_musical" target="_blank" class="insta-link">인스타그램 @vlog_musical</a>
         </div>
 
         <h2>공연 포스터</h2>
@@ -691,7 +949,73 @@
         </div>
       </div>
 
-      <!-- [탭2] DIRECTOR -->
+      <!-- 📸 [탭2] 갤러리 (신규 추가) -->
+      <div id="gallery" class="tab-content">
+        <h2>GALLERY</h2>
+        <!-- <p style="text-align:center; color:var(--text-secondary); margin-bottom:40px; font-weight:500;">무대 위에서 가장 빛났던 단원들의 순간입니다.</p> -->
+
+        <!-- 1기 사진 섹션 (예시) -->
+        <div class="gallery-section">
+          <h3 class="serif-text">1기 (위키드)</h3>
+          <div class="gallery-grid">
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_1.jpg')">
+              <img src="img_vlog_first_1.jpg" alt="1기 활동사진 1">
+            </div>
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_2.jpg')">
+              <img src="img_vlog_first_2.jpg" alt="1기 활동사진 2">
+            </div>
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_3.jpg')">
+              <img src="img_vlog_first_3.jpg" alt="1기 활동사진 3">
+            </div>
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_4.jpg')">
+              <img src="img_vlog_first_4.jpg" alt="1기 활동사진 4">
+            </div>
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_5.jpg')">
+              <img src="img_vlog_first_5.jpg" alt="1기 활동사진 5">
+            </div>
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_6.jpg')">
+              <img src="img_vlog_first_6.jpg" alt="1기 활동사진 6">
+            </div>
+            <div class="gallery-item" onclick="openImageModal('img_vlog_first_7.jpg')">
+              <img src="img_vlog_first_7.jpg" alt="1기 활동사진 7">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- [탭3] 연습실 -->
+      <div id="studio" class="tab-content">
+        <h2>연습실</h2>
+        <div class="studio-section">
+          <h3>탄성연기스튜디오</h3>
+          <div class="image-slider">
+            <div class="slide-item"><img src="img_tansung_studio_1.jpg" alt="탄성 스튜디오 사진 1"></div>
+          </div>
+          <div class="studio-info">
+            <p><strong>📍 위치:</strong> 서울 동작구 사당로 277 지하1층</p>
+            <a href="https://naver.me/FGERRLLL" target="_blank" class="btn-naver">🗺️ 네이버 지도에서 보기</a>
+          </div>
+        </div>
+        <div class="studio-section">
+          <h3>오로라스튜디오</h3>
+          <div class="image-slider">
+            <div class="slide-item"><img src="img_aurora_studio_1.jpg" alt="오로라 스튜디오 사진 1"></div>
+            <div class="slide-item"><img src="img_aurora_studio_2.jpg" alt="오로라 스튜디오 사진 2"></div>
+            <div class="slide-item"><img src="img_aurora_studio_3.jpg" alt="오로라 스튜디오 사진 3"></div>
+            <div class="slide-item"><img src="img_aurora_studio_4.jpg" alt="오로라 스튜디오 사진 4"></div>
+            <div class="slide-item"><img src="img_aurora_studio_5.jpg" alt="오로라 스튜디오 사진 5"></div>
+            <div class="slide-item"><img src="img_aurora_studio_6.jpg" alt="오로라 스튜디오 사진 6"></div>
+            <div class="slide-item"><img src="img_aurora_studio_7.jpg" alt="오로라 스튜디오 사진 7"></div>
+          </div>
+          <div class="studio-info">
+            <p><strong>📍 위치:</strong> 서울 성북구 동선동1가 85-101</p>
+            <a href="https://naver.me/FCZYfc9y" target="_blank" class="btn-naver">🗺️ 네이버 지도에서 보기</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- [탭4] DIRECTOR -->
       <div id="staff" class="tab-content">
         <h2>DIRECTOR</h2>
         <div class="cast-board">
@@ -719,25 +1043,43 @@
         </div>
       </div>
 
-      <!-- [탭3] Q&A -->
+      <!-- [탭5] Q&A -->
       <div id="qa" class="tab-content">
         <h2>자주 묻는 질문</h2>
         <div class="script-qa">
           <div class="qa-item">
-            <div class="qa-q"><span>Q.</span><div>뮤지컬 경험이 없는데 괜찮나요?</div></div>
-            <div class="qa-a"><span>A.</span><div>물론이죠! VLog는 일반인/직장인 아마추어 극단입니다 :)<br/>하지만 열정적으로 최선을 다해주셔야 합니다!</div></div>
+            <div class="qa-q"><span>Q.</span>
+              <div>뮤지컬 경험이 없는데 괜찮나요?</div>
+            </div>
+            <div class="qa-a"><span>A.</span>
+              <div>물론이죠! VLog는 일반인/직장인 아마추어 극단입니다 :)<br />하지만 열정적으로 최선을 다해주셔야 합니다!</div>
+            </div>
           </div>
           <div class="qa-item">
-            <div class="qa-q"><span>Q.</span><div>노래, 연기, 춤 다 못하는데 괜찮나요?</div></div>
-            <div class="qa-a"><span>A.</span><div>노래, 연기, 춤 모두 전문 코치님들께서 부족한 부분 하나하나씩 채워드리고, 가르쳐드릴겁니다!<br/>뮤지컬은 혼자가 아닌 함께 만들어갑니다. 걱정말고 지원해주세요!</div></div>
+            <div class="qa-q"><span>Q.</span>
+              <div>노래, 연기, 춤 다 못하는데 괜찮나요?</div>
+            </div>
+            <div class="qa-a"><span>A.</span>
+              <div>노래, 연기, 춤 모두 전문 코치님들께서 부족한 부분 하나하나씩 채워드리고, 가르쳐드릴겁니다!<br />뮤지컬은 혼자가 아닌 함께 만들어갑니다. 걱정말고 지원해주세요!</div>
+            </div>
           </div>
           <div class="qa-item">
-            <div class="qa-q"><span>Q.</span><div>공연제작비는 무엇인가요?</div></div>
-            <div class="qa-a"><span>A.</span><div>공연을 올리기 위해 들어가는 제작비를 말하며, 공연장 대관, 무대 제작, 음향, 조명 등 좋은 퀄리티의 공연을 올리실 수 있도록 단원분들께서 내시는 비용 그 이상으로 제공해드릴 예정입니다.</div></div>
+            <div class="qa-q"><span>Q.</span>
+              <div>공연제작비는 무엇인가요?</div>
+            </div>
+            <div class="qa-a"><span>A.</span>
+              <div>공연을 올리기 위해 들어가는 제작비를 말하며, 공연장 대관, 무대 제작, 음향, 조명 등 좋은 퀄리티의 공연을 올리실 수 있도록 단원분들께서 내시는 비용 그 이상으로 제공해드릴
+                예정입니다.</div>
+            </div>
           </div>
           <div class="qa-item">
-            <div class="qa-q"><span>Q.</span><div>오디션을 꼭 봐야하나요?</div></div>
-            <div class="qa-a"><span>A.</span><div>더블캐스팅 구조로, 한 배역에 2명 캐스팅됩니다.<br/>원하시는 배역의 지원자가 2명이 넘는다면 공정하게 오디션을 통해 캐스팅 될 수 밖에 없습니다!<br/>배역이 정해져야 연습이 제대로 되기 때문에 3주차에 오디션을 보고 다음날 바로 배역이 발표됩니다 :)</div></div>
+            <div class="qa-q"><span>Q.</span>
+              <div>오디션을 꼭 봐야하나요?</div>
+            </div>
+            <div class="qa-a"><span>A.</span>
+              <div>더블캐스팅 구조로, 한 배역에 2명 캐스팅됩니다.<br />원하시는 배역의 지원자가 2명이 넘는다면 공정하게 오디션을 통해 캐스팅 될 수 밖에 없습니다!<br />배역이 정해져야
+                연습이 제대로 되기 때문에 3주차에 오디션을 보고 다음날 바로 배역이 발표됩니다 :)</div>
+            </div>
           </div>
         </div>
 
@@ -748,47 +1090,15 @@
         </div>
       </div>
 
-      <!-- [탭4] 연습실 -->
-      <div id="studio" class="tab-content">
-        <h2>연습실</h2>
-        
-        <div class="studio-section">
-          <h3>탄성연기스튜디오</h3>
-          <div class="image-slider">
-            <div class="slide-item"><img src="img_tansung_studio_1.jpg" alt="탄성 스튜디오 사진 1"></div>
-          </div>
-          <div class="studio-info">
-            <p><strong>📍 위치:</strong> 서울 동작구 사당로 277 지하1층</p>
-            <a href="https://naver.me/FGERRLLL" target="_blank" class="btn-naver">🗺️ 네이버 지도에서 보기</a>
-          </div>
-        </div>
-
-        <div class="studio-section">
-          <h3>오로라스튜디오</h3>
-          <div class="image-slider">
-            <div class="slide-item"><img src="img_aurora_studio_1.jpg" alt="오로라 스튜디오 사진 1"></div>
-            <div class="slide-item"><img src="img_aurora_studio_2.jpg" alt="오로라 스튜디오 사진 2"></div>
-            <div class="slide-item"><img src="img_aurora_studio_3.jpg" alt="오로라 스튜디오 사진 3"></div>
-            <div class="slide-item"><img src="img_aurora_studio_4.jpg" alt="오로라 스튜디오 사진 4"></div>
-            <div class="slide-item"><img src="img_aurora_studio_5.jpg" alt="오로라 스튜디오 사진 5"></div>
-            <div class="slide-item"><img src="img_aurora_studio_6.jpg" alt="오로라 스튜디오 사진 6"></div>
-            <div class="slide-item"><img src="img_aurora_studio_7.jpg" alt="오로라 스튜디오 사진 7"></div>
-          </div>
-          <div class="studio-info">
-            <p><strong>📍 위치:</strong> 서울 성북구 동선동1가 85-101</p>
-            <a href="https://naver.me/FCZYfc9y" target="_blank" class="btn-naver">🗺️ 네이버 지도에서 보기</a>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <footer style="text-align:center; padding:40px 20px; font-size:0.85rem; color:var(--text-muted); background:var(--bg-secondary); font-family: 'Hahmlet', serif;">
-      &copy; 2026 THEATER TROUPE VLog. All rights reserved.
+    <footer
+      style="text-align:center; padding:40px 20px; font-size:0.85rem; color:var(--text-muted); background:var(--bg-secondary); font-family: 'Hahmlet', serif;">
+      &copy; 2026 MUSICAL THEATRE VLog. All rights reserved.
     </footer>
   </div>
 
-  <!-- 모달 -->
+  <!-- 프로필 모달 -->
   <div id="staffModal" class="modal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="close-modal" onclick="document.getElementById('staffModal').classList.remove('show')">&times;</span>
@@ -796,8 +1106,19 @@
     </div>
   </div>
 
+  <!-- 📸 이미지 확대 팝업 (갤러리용) -->
+  <div id="imageModal" class="modal" onclick="closeImageModal(event)">
+    <div class="modal-content image-only">
+      <!-- X 버튼 -->
+      <span class="close-modal" style="top:-40px; right:0; color:#fff;"
+        onclick="document.getElementById('imageModal').classList.remove('show')">&times;</span>
+      <!-- 이미지 (width:100% -> max-width:100%로 변경, 클릭 방지 이동) -->
+      <img id="expandedImg" src="" onclick="event.stopPropagation()"
+        style="max-width:100%; max-height:85vh; border-radius:12px; display:block; margin:0 auto; box-shadow:0 10px 40px rgba(0,0,0,0.8);">
+    </div>
+  </div>
+
   <script>
-    // --- 🎭 1. 커튼콜 오프닝 연출 ---
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.body.classList.add('show-started');
@@ -807,23 +1128,21 @@
       }, 500);
     });
 
-    // --- 🎭 2. 테마 변경 ---
     const themeToggleBtn = document.getElementById('theme-toggle');
-    let savedTheme = localStorage.getItem('theme') || 'dark'; 
+    let savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
+
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
 
-    // --- 🎭 3. 암전(Scene Change) 탭 전환 로직 ---
     function switchTab(tabId) {
       const stage = document.getElementById('main-stage');
       stage.classList.add('scene-changing');
-      
+
       document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
       const targetBtn = Array.from(document.querySelectorAll(".tab-btn")).find(btn => btn.getAttribute("onclick").includes(tabId));
       if (targetBtn) targetBtn.classList.add("active");
@@ -833,37 +1152,19 @@
         document.getElementById(tabId).classList.add("active");
         window.scrollTo({ top: 0, behavior: 'instant' });
         stage.classList.remove('scene-changing');
-      }, 400); 
+      }, 400);
     }
 
-    // --- 🌟 모달 데이터 하드코딩 ---
     const staffData = {
       staff1: {
         name: "신가연",
         role: "총괄 연출",
         img: "img_teacher_director.jpg",
         career: [
-          {
-            category: "학력",
-            items: ["중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업"]
-          },
-          {
-            category: "단편 <겨울은 겨울> (2017) 감독",
-            items: [
-              "영진위 제작지원작",
-              "인디스토리 배급",
-              "22회 부천국제판타스틱 영화제 상영",
-              "대학영화제 대상 수상"
-            ]
-          },
-          {
-            category: "단편 <일렁일렁> (2020) 감독",
-            items: ["영진위 뉴미디어 영상콘텐츠 제작지원작", "인디스토리 배급"]
-          },
-          {
-            category: "단편 <CONTACT> (2022) 감독",
-            items: ["한국문화예술진흥위원회 / 안은미 컴퍼니 제작지원작"]
-          }
+          { category: "학력", items: ["중앙대학교 첨단영상대학원 영상학과 연출 석사 졸업"] },
+          { category: "단편 <겨울은 겨울> (2017) 감독", items: ["영진위 제작지원작", "인디스토리 배급", "22회 부천국제판타스틱 영화제 상영", "대학영화제 대상 수상"] },
+          { category: "단편 <일렁일렁> (2020) 감독", items: ["영진위 뉴미디어 영상콘텐츠 제작지원작", "인디스토리 배급"] },
+          { category: "단편 <CONTACT> (2022) 감독", items: ["한국문화예술진흥위원회 / 안은미 컴퍼니 제작지원작"] }
         ]
       },
       staff2: {
@@ -871,32 +1172,9 @@
         role: "음악 & 연기 코치",
         img: "img_teacher_vocal.jpg",
         career: [
-          {
-            category: "방송",
-            items: ["2017 웹드라마 <굿모닝 이층버스> 학생 단역", "2026 단편영화 <이벤트> 지수 역"]
-          },
-          {
-            category: "연극",
-            items: [
-              "2021~2022 <한 여름밤의 꿈> 요정 역 | 이효숙 연출",
-              "2023 <살고싶어 죽겠어요> 의사, 기자 역 | 장윤호 연출",
-              "2023 <굿닥터> 아내, 치과조수, 여자, 직원 역 | 박수철 연출",
-              "2023 김제시 <콩쥐팥쥐> 팥쥐 역 | 고혜미 연출",
-              "2024 <DIE> 줄리엣 역 | 장윤호 연출",
-              "2024 <머더> 강예은 역 | 김윤재 연출",
-              "2025 <영겁의 방> 시은빈 역 | 이민수 연출",
-              "2025 <더 투나잇 쇼> 기자 역 | 이민수 연출",
-            ]
-          },
-          {
-            category: "뮤지컬",
-            items: [
-              "2024 <나도, 밤나무> 사깨비 역 | 박현철 연출",
-              "2024~2025 <너와 나 이곳에 우리> 세아 역 (주연) | 김윤재 연출",
-              "2025 <지구용사 푸름이> 푸름이 역 (주연) | 김지선 연출",
-              "2025 <나도, 밤나무> 현룡 역 (주연) | 박현철 연출"
-            ]
-          }
+          { category: "방송", items: ["2017 웹드라마 <굿모닝 이층버스> 학생 단역", "2026 단편영화 <이벤트> 지수 역"] },
+          { category: "연극", items: ["2021~2022 <한 여름밤의 꿈> 요정 역 | 이효숙 연출", "2023 <살고싶어 죽겠어요> 의사, 기자 역 | 장윤호 연출", "2023 <굿닥터> 아내, 치과조수, 여자, 직원 역 | 박수철 연출", "2023 김제시 <콩쥐팥쥐> 팥쥐 역 | 고혜미 연출", "2024 <DIE> 줄리엣 역 | 장윤호 연출", "2024 <머더> 강예은 역 | 김윤재 연출", "2025 <영겁의 방> 시은빈 역 | 이민수 연출", "2025 <더 투나잇 쇼> 기자 역 | 이민수 연출"] },
+          { category: "뮤지컬", items: ["2024 <나도, 밤나무> 사깨비 역 | 박현철 연출", "2024~2025 <너와 나 이곳에 우리> 세아 역 (주연) | 김윤재 연출", "2025 <지구용사 푸름이> 푸름이 역 (주연) | 김지선 연출", "2025 <나도, 밤나무> 현룡 역 (주연) | 박현철 연출"] }
         ]
       },
       staff3: {
@@ -904,28 +1182,8 @@
         role: "안무 코치",
         img: "img_teacher_dance.png",
         career: [
-          {
-            category: "뮤지컬",
-            items: [
-              "2022 <아리아라리> 뭉치役",
-              "2023 <점프점프> 멀티役",
-              "2024 <청아> 기장役",
-              "2024 <아이스웨어> 멀티役",
-              "2024 <나도밤나무> 호랑이役",
-              "2024 <너와나 이곳의 우리> 홍준役",
-              "2025 <쇼미더스쿨> 다임役"
-            ]
-          },
-          {
-            category: "공연",
-            items: [
-              "2016 천안흥타령 <난타> ‘대상’ 2023 <앨리스> 요리사役",
-              "2024 <훈민정음> 백성役",
-              "2024 <선녀와나무꾼> 사슴役",
-              "2025 <토끼야 수궁가자> 조연출",
-              "2025 <씨앗씨> 씨앗役"
-            ]
-          }
+          { category: "뮤지컬", items: ["2022 <아리아라리> 뭉치役", "2023 <점프점프> 멀티役", "2024 <청아> 기장役", "2024 <아이스웨어> 멀티役", "2024 <나도밤나무> 호랑이役", "2024 <너와나 이곳의 우리> 홍준役", "2025 <쇼미더스쿨> 다임役"] },
+          { category: "공연", items: ["2016 천안흥타령 <난타> ‘대상’ 2023 <앨리스> 요리사役", "2024 <훈민정음> 백성役", "2024 <선녀와나무꾼> 사슴役", "2025 <토끼야 수궁가자> 조연출", "2025 <씨앗씨> 씨앗役"] }
         ]
       }
     };
@@ -934,7 +1192,7 @@
       const data = staffData[id];
       const careerHtml = data.career.map(group => `
         <div style="margin-bottom: 20px;">
-          <div style="font-family:'Hahmlet', serif; color:var(--theater-gold); font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:5px; margin-bottom:10px;">[${group.category}]</div>
+          <div style="font-family:'Hahmlet', serif; color:var(--theatre-gold); font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:5px; margin-bottom:10px;">[${group.category}]</div>
           <ul style="padding-left:20px; font-size:0.95rem; color:var(--text-primary); line-height:1.6; margin:0;">
             ${group.items.map(item => `<li style="margin-bottom:4px;">${item}</li>`).join("")}
           </ul>
@@ -942,10 +1200,10 @@
       `).join("");
 
       const html = `
-        <div style="text-align:center; padding:40px 20px 20px 20px; border-bottom:3px solid var(--theater-gold); background:var(--bg-tertiary);">
-          <img src="${data.img}" alt="${data.name}" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:15px; border:2px solid var(--theater-gold); box-shadow:0 10px 20px var(--shadow-color);">
+        <div style="text-align:center; padding:40px 20px 20px 20px; border-bottom:3px solid var(--theatre-gold); background:var(--bg-tertiary);">
+          <img src="${data.img}" alt="${data.name}" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:15px; border:2px solid var(--theatre-gold); box-shadow:0 10px 20px var(--shadow-color);">
           <h3 style="color:var(--text-heading); margin:0 0 5px 0; font-size:1.6rem; font-family:'Hahmlet', serif;">${data.name}</h3>
-          <p style="color:var(--theater-gold); font-weight:600; margin:0; font-size:1rem;">${data.role}</p>
+          <p style="color:var(--theatre-gold); font-weight:600; margin:0; font-size:1rem;">${data.role}</p>
         </div>
         <div style="padding:25px 30px; overflow-y:auto; flex:1; background:var(--bg-card);">
           ${careerHtml}
@@ -961,13 +1219,23 @@
       }
     }
 
-    // --- 슬라이더 자동 스크롤 ---
+    // 📸 갤러리 이미지 모달 띄우기
+    function openImageModal(src) {
+      document.getElementById('expandedImg').src = src;
+      document.getElementById('imageModal').classList.add('show');
+    }
+
+    // 📸 갤러리 이미지 모달 닫기
+    function closeImageModal(e) {
+      document.getElementById("imageModal").classList.remove("show");
+    }
+
     setInterval(() => {
       const activeSliders = document.querySelectorAll('.tab-content.active .image-slider');
       activeSliders.forEach(slider => {
         const slideItem = slider.querySelector('.slide-item');
         if (!slideItem) return;
-        const step = slideItem.clientWidth + 15; 
+        const step = slideItem.clientWidth + 15;
         if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 20) {
           slider.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
@@ -977,4 +1245,5 @@
     }, 4000);
   </script>
 </body>
+
 </html>
